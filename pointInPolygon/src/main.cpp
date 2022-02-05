@@ -54,22 +54,29 @@ int main( ) {
     std::cin >> file;
     std::string directory = "../input/";
     std::string filename = directory + file;
-    p2.readFile(filename);
+    if (p2.readFile(filename) == -1) 
+        return -1; 
+
+    // for ( auto edge : p2.edges) {
+    //     std::cout<< "hereA\n";
+    //     std::cout<< edge->vertexA->x << " " << edge->vertexA->y << "\n";
+    //     std::cout<< edge->vertexB->x << " " << edge->vertexB->y << "\n";
+    //     std::cout<< "hereB\n";
+    // }
+
+    //Taking Query Input
+    double query_x, query_y;
+    std::cout << "Type the x - coordinate of the query point & press enter! ";
+    std::cin >>  query_x;
+    std::cout << "Type the y - coordinate of the query point & press enter! ";
+    std::cin >>  query_y;
+    p2.setQueryPoint(query_x, query_y);
 
 
-    // //Taking Query Input
-    // double query_x, query_y;
-    // std::cout << "Type the x - coordinate of the query point & press enter! ";
-    // std::cin >>  query_x;
-    // std::cout << "Type the y - coordinate of the query point & press enter! ";
-    // std::cin >>  query_y;
-    // p2.setQueryPoint(query_x, query_y);
-
-
-    // //Check the result
-    // auto final = p2.isPointInsidePolygon();
-    // std::cout << "The result is: " << final << "\n";    
-    // std::cout << "--------------------------------------------------" << "\n";
+    //Check the result
+    auto final = p2.isPointInsidePolygon();
+    std::cout << "The result is: " << final << "\n";    
+    std::cout << "--------------------------------------------------" << "\n";
 
 } 
 

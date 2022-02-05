@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+
 #include "../include/Polygon.h"
 
 Polygon::Polygon() {}
@@ -12,15 +14,60 @@ void Polygon::setQueryPoint( double X, double Y) {
     this->query_point = std::make_shared<Point>(X,Y);
 }
 
-void Polygon::readFile(std::string& filename) {
+int Polygon::readFile(std::string& filename) {
     std::fstream myfile(filename, std::ios_base::in);
 
-    double a;
-    while (myfile >> a) {
-        printf("%f ", a);
+    if (!myfile) {
+        std::cerr << "Error: Could not find the requested file!\n";
+        return -1;
     }
-    getchar();
+
+    std::string line;
+    int number_of_lines = 0;
+    if (getline(myfile, line)) 
+        number_of_lines = std::stoi(line);
+    
+    if ( number_of_lines <= 0) {
+        std::cout << "Number of lines is less than or equal to 0\n";
+        return -1;
+    }
+
+    std::vector<Point> points;
+    // std::cout<<number_of_lines<< " :Number of lines \n";
+    int counter = 0;
+    std::string linetxt;
+    while (std::getline(myfile, linetxt)){
+        std::istringstream iss(linetxt);
+        double a, b;
+        if (!(iss >> a >> b)) { 
+            std::cout << "There is something wrong with the input file!\n";
+            return -1; 
+        } 
+        // std::cout<< a << " " << b<< "\n";
+        counter++;
+        points.push_back(Point(a, b));    
+    }
+
+    convertPointToEdges(points);
 }
+
+void Polygon::convertPointToEdges(std::vector<Point>&points) {
+
+    std::vector<std::shared_ptr<Edge>> _edges;
+    int n = points.size();
+
+    for ( int i = 0; i < n; i++) {
+        
+        std::shared_ptr<Point> p1 = std::make_shared<Point>(points[i].x, points[i].y);
+        std::shared_ptr<Point> p2 = std::make_shared<Point>(points[(i+1)%n].x, points[(i+1)%n].y);
+
+        std::shared_ptr<Edge> edge = std::make_shared<Edge>(p1, p2);
+        _edges.push_back(edge);
+    }
+
+    edges = _edges;
+}
+
 
 
 int Polygon::isPointInsidePolygon() {
@@ -28,13 +75,13 @@ int Polygon::isPointInsidePolygon() {
     // std::cout << "Entered main function\n";
     int result = 0;
     for ( auto &edge : edges) {
-        std::cout << "Edge!\n";
+        // std::cout << "Edge!\n";
 
-        int temp_result;
+        int temp_result = 0;
         
         Polygon::intersectEdge(edge, query_point, temp_result);
-        std::cout << "Edge ";
-        std::cout << "("<< edge->vertexA->x << ", " << edge->vertexA->y << ")";
+        std::cout << "Edge: ";
+        std::cout << "("<< edge->vertexA->x << ", " << edge->vertexA->y << ") ";
         std::cout << "("<< edge->vertexB->x << ", " << edge->vertexB->y << ")";
         std::cout << ", intersection: " << temp_result << "\n";
 
