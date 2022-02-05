@@ -110,17 +110,21 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
     //Query Point Coordinates
     auto xp = point->x;
-    // std::cout << "got xp!\n";
-
     auto yp = point->y;
+    // std::cout << xp << " " << yp << "\n";
+
 
     //Vertex A of edge e
     auto x1 = edge->vertexA->x;
     auto y1 = edge->vertexA->y;
+    // std::cout << x1 << " " << y1 << "\n";
+
 
     //Vertex A of edge e
     auto x2 = edge->vertexB->x;
     auto y2 = edge->vertexB->y;
+    // std::cout << x2 << " " << y2 << "\n";
+
     // std::cout << "Got points!\n";
 
 

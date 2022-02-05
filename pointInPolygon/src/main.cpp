@@ -72,7 +72,6 @@ int main( ) {
     std::cin >>  query_y;
     p2.setQueryPoint(query_x, query_y);
 
-
     //Check the result
     auto final = p2.isPointInsidePolygon();
     std::cout << "The result is: " << final << "\n";    
@@ -82,11 +81,10 @@ int main( ) {
 
 
 ///1 == inside
-///2 == o
+///2 == on the edge
 ///0 == outside
 
 //floating point issue!
 //inheritance? -> add default constructors
-///file stuff
 //plotting
 //remove uncessary libs
