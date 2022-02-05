@@ -6,7 +6,6 @@ class Polygon : public Edge {
     std::vector<std::unique_ptr<Edge>> edges;
     void readFile();
     std::vector<std::unique_ptr<Edge>> getPoints();
-    std::vector<std::unique_ptr<Edge>> getPoints();
     int isPointInPolygon();
     int intersectEdge(std::unique_ptr<Edge> e, std::unique_ptr<Point> p,int m);
 

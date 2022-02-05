@@ -1,6 +1,9 @@
 #include <iostream>
 #include "../include/Point.h"
 
+// gcc main.cpp  Point.cpp -lstdc++ -o main.o
+// ./main.o
+
 int main( ) {
 
     std::unique_ptr<Point> point1 = std::make_unique<Point>(10, 20);
