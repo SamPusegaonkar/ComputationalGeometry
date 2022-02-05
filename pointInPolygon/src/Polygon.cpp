@@ -1,23 +1,43 @@
 #include <iostream>
+#include <fstream>
 #include "../include/Polygon.h"
+
+Polygon::Polygon() {}
 
 Polygon::Polygon(std::vector<std::shared_ptr<Edge>> &_edges) {
     this->edges = _edges;
 }
 
-int Polygon::isPointInPolygon() {
+void Polygon::setQueryPoint( double X, double Y) {
+    this->query_point = std::make_shared<Point>(X,Y);
+}
 
-    std::cout << "Entered main function\n";
+void Polygon::readFile(std::string& filename) {
+    std::fstream myfile(filename, std::ios_base::in);
+
+    double a;
+    while (myfile >> a) {
+        printf("%f ", a);
+    }
+    getchar();
+}
+
+
+int Polygon::isPointInsidePolygon() {
+
+    // std::cout << "Entered main function\n";
     int result = 0;
     for ( auto &edge : edges) {
         std::cout << "Edge!\n";
 
         int temp_result;
-        std::cout << edge->vertexA->x << " " << edge->vertexA->y <<  "!\n";
-        std::cout << edge->vertexB->x << " " << edge->vertexB->y << "!\n";
-
+        
         Polygon::intersectEdge(edge, query_point, temp_result);
-        std::cout << "Got the result back from insersect_edge!\n";
+        std::cout << "Edge ";
+        std::cout << "("<< edge->vertexA->x << ", " << edge->vertexA->y << ")";
+        std::cout << "("<< edge->vertexB->x << ", " << edge->vertexB->y << ")";
+        std::cout << ", intersection: " << temp_result << "\n";
+
         if ( temp_result == 2 )
             return 2;
         
@@ -30,20 +50,20 @@ int Polygon::isPointInPolygon() {
     return 1;
 }
 
-int Polygon::isPointInPolygon(std::vector<std::shared_ptr<Edge>> &_edges, std::shared_ptr<Point> &_query_point) {
+int Polygon::isPointInsidePolygon(std::vector<std::shared_ptr<Edge>> &_edges, std::shared_ptr<Point> &_query_point) {
 
     edges = _edges;
     query_point = _query_point;
-    isPointInPolygon();
+    isPointInsidePolygon();
 }
 
-int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&point, int &sub_result) {
+int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&point, int &sub_result) {
 
-    std::cout << "Entered the intersectEdge function!\n";
+    // std::cout << "Entered the intersectEdge function!\n";
 
     //Query Point Coordinates
     auto xp = point->x;
-    std::cout << "got xp!\n";
+    // std::cout << "got xp!\n";
 
     auto yp = point->y;
 
@@ -54,13 +74,13 @@ int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&po
     //Vertex A of edge e
     auto x2 = edge->vertexB->x;
     auto y2 = edge->vertexB->y;
-    std::cout << "Got points!\n";
+    // std::cout << "Got points!\n";
 
 
     //Case 1 : Edge e is on the left of the ray which points to the right
     if ( x1 < xp and x2 < xp)
         return 0;
-    std::cout << "Case 1 over!\n";
+    // std::cout << "Case 1 over!\n";
 
 
     //Case 2 : Edge is Horizontal
@@ -75,7 +95,7 @@ int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&po
         sub_result = 0;
         return 0;
     }
-    std::cout << "Case 2 over!\n";
+    // std::cout << "Case 2 over!\n";
 
 
     auto x_intersect = ((yp-y1) / (y2-y1)) * (x2-x1) + x1;
@@ -88,7 +108,7 @@ int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&po
         return 2;
 
     }
-    std::cout << "Case 3 over!\n";
+    // std::cout << "Case 3 over!\n";
 
 
     //Case 4 : Intersection Point (of the ray) is the endpoints of edge
@@ -113,7 +133,7 @@ int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&po
             return 0;
 
         }
-    std::cout << "Case 4 over!\n";
+    // std::cout << "Case 4 over!\n";
 
 
     //Case 5 : 
@@ -124,8 +144,7 @@ int Polygon::intersectEdge(std::shared_ptr<Edge>&edge, std::shared_ptr<Point>&po
     
     sub_result = 0;
     return 0;
-    std::cout << "Case 5 over!\n";
+    // std::cout << "Case 5 over!\n";
 
 
 }
-
