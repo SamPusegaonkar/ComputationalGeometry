@@ -1,5 +1,5 @@
-#include <iostream>
 #include "../include/Point.h"
+
 
 
 Point::Point( double X, double Y ) {
