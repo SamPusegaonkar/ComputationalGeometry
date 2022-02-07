@@ -85,8 +85,6 @@ int main( ) {
 ///0 == outside
 
 
-//check extra lines in txt file
-//-> maybe floating point?
 //== operator
 //floating point issue!
 
