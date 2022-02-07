@@ -34,15 +34,18 @@ int Polygon::readFile(std::string& filename) {
 
     std::vector<Point> points;
     // std::cout<<number_of_lines<< " :Number of lines \n";
-    int counter = 0;
+    int counter = 1;
     std::string linetxt;
     while (std::getline(myfile, linetxt)){
         std::istringstream iss(linetxt);
         double a, b;
-        if (!(iss >> a >> b)) { 
+        if ( counter > number_of_lines) continue;
+        if (!(iss >> a >> b) and counter <= number_of_lines ) { 
+            std::cout << counter << ":Counter\n";
             std::cout << "There is something wrong with the input file!\n";
             return -1; 
         } 
+
         // std::cout<< a << " " << b<< "\n";
         counter++;
         points.push_back(Point(a, b));    
