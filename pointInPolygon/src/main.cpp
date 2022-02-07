@@ -84,7 +84,12 @@ int main( ) {
 ///2 == on the edge
 ///0 == outside
 
+
+//check extra lines in txt file
+//-> maybe floating point?
+//== operator
 //floating point issue!
+
 //inheritance? -> add default constructors
 //plotting
 //remove uncessary libs

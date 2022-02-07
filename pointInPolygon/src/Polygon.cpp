@@ -129,22 +129,32 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
 
     //Case 1 : Edge e is on the left of the ray which points to the right
-    if ( x1 < xp and x2 < xp)
+    if ( (x1 < xp && x2 < xp) ) {
+        std::cout<<"Case 1-0\n";
+        sub_result = 0;
         return 0;
+
+    }
+        
     // std::cout << "Case 1 over!\n";
 
 
     //Case 2 : Edge is Horizontal
     if ( y1 == y2 ) {
+        std::cout<<"Case 2\n";
         auto x_min = x1 < x2 ? x1 : x2;
         auto x_max = x1 > x2 ? x1 : x2;
 
-        if ( (x_min <= xp and xp <= x_max) and (yp == y1)) {
+        if ( (x_min <= xp && xp <= x_max) and (yp == y1)) {
+            std::cout<<"Case 2 - 2\n";
             sub_result = 2;
             return 2;
         }
-        sub_result = 0;
-        return 0;
+        else {
+            std::cout<<"Case 2-0\n";
+            sub_result = 0;
+            return 0;
+        }
     }
     // std::cout << "Case 2 over!\n";
 
@@ -155,6 +165,7 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
     //Case 3 : Point is on the edge 
     if ( x_intersect == xp and (y_min <= yp and yp <= y_max)) {
+        std::cout<<"Case 3-2\n";
         sub_result = 2;
         return 2;
 
@@ -163,39 +174,55 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
 
     //Case 4 : Intersection Point (of the ray) is the endpoints of edge
-    if ( xp < x1 and yp == y1)
+    if ( xp < x1 and yp == y1){
         if ( y1 < y2) {
+            std::cout<<"Case 4-1\n";
             sub_result = 1;
             return 1;
         }
         else {
-            sub_result = 1;
+            std::cout<<"Case 4-0\n";
+            sub_result = 0;
             return 0;
         }
+    }
 
-    if ( xp < x2 and yp == y2)
+    if ( xp < x2 and yp == y2) {
         if ( y2 < y1) {
+            std::cout<<"Case 4-1\n";
             sub_result = 1;
             return 1;
 
         }
         else {
+            std::cout<<"Case 4-0\n";
             sub_result = 0;
             return 0;
 
         }
+    }
+
     // std::cout << "Case 4 over!\n";
 
 
     //Case 5 : 
-    if ( x_intersect > xp and (y_min < yp < y_max)) {
+    if ( x_intersect > xp and (y_min < yp and yp < y_max)) {
+        std::cout<<"Case 5-1\n";
         sub_result = 1;
         return 1;
+    } else{
+        std::cout<<"Case 5-0\n";
+        sub_result = 0;
+        return 0;
     }
     
-    sub_result = 0;
-    return 0;
     // std::cout << "Case 5 over!\n";
 
+
+    if ( (xp > x2 and xp > x1) or (xp < x1 and xp < x2)) {
+        std::cout<<"Case Extra Check-0\n";
+        sub_result = 0;
+        return 0;
+    }
 
 }
