@@ -3,9 +3,8 @@
 
 class Point {
     public:
-        double x, y;
+        float x, y;
         Point();
-        Point( double X, double Y );
-        bool operator==(const Point& other) const;
+        Point( float X, float Y );
 
 };

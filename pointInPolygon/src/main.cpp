@@ -1,9 +1,12 @@
 #include <iostream>
+
 #include "../include/Polygon.h"
 
 
 // gcc main.cpp  Point.cpp Edge.cpp Polygon.cpp -lstdc++ -o main.o
 // ./main.o
+
+
 
 int main( ) {
 
@@ -64,7 +67,7 @@ int main( ) {
     // }
 
     //Taking Query Input
-    double query_x, query_y;
+    float query_x, query_y;
     std::cout << "Type the x - coordinate of the query point & press enter! ";
     std::cin >>  query_x;
     std::cout << "Type the y - coordinate of the query point & press enter! ";
@@ -88,3 +91,4 @@ int main( ) {
 //floating point issue!
 //plotting
 //remove uncessary libs
+

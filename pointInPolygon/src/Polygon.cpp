@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+#include <cstdlib>
+#include <cmath>
 #include "../include/Polygon.h"
 
 Polygon::Polygon() {}
@@ -10,7 +11,7 @@ Polygon::Polygon(std::vector<std::shared_ptr<Edge>> &_edges) {
     this->edges = _edges;
 }
 
-void Polygon::setQueryPoint( double X, double Y) {
+void Polygon::setQueryPoint( float X, float Y) {
     this->query_point = std::make_shared<Point>(X,Y);
 }
 
@@ -38,7 +39,7 @@ int Polygon::readFile(std::string& filename) {
     std::string linetxt;
     while (std::getline(myfile, linetxt)){
         std::istringstream iss(linetxt);
-        double a, b;
+        float a, b;
         if ( counter > number_of_lines) continue;
         if (!(iss >> a >> b) and counter <= number_of_lines ) { 
             std::cout << counter << ":Counter\n";
@@ -143,12 +144,12 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
 
     //Case 2 : Edge is Horizontal
-    if ( y1 == y2 ) {
+    if ( isEqual(y1, y2) ) {
         std::cout<<"Case 2\n";
         auto x_min = x1 < x2 ? x1 : x2;
         auto x_max = x1 > x2 ? x1 : x2;
 
-        if ( (x_min <= xp && xp <= x_max) and (yp == y1)) {
+        if ( ( isLessThanOrEqual(x_min, xp) && isLessThanOrEqual(xp, x_max)) and (isEqual(yp, y1))) {
             std::cout<<"Case 2 - 2\n";
             sub_result = 2;
             return 2;
@@ -167,7 +168,7 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
     auto y_max = y1 > y2 ? y1 : y2;
 
     //Case 3 : Point is on the edge 
-    if ( x_intersect == xp and (y_min <= yp and yp <= y_max)) {
+    if ( isEqual(x_intersect,xp) and (isLessThanOrEqual(y_min, yp) and isLessThanOrEqual(yp, y_max))) {
         std::cout<<"Case 3-2\n";
         sub_result = 2;
         return 2;
@@ -177,7 +178,7 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
 
     //Case 4 : Intersection Point (of the ray) is the endpoints of edge
-    if ( xp < x1 and yp == y1){
+    if ( xp < x1 and isEqual(yp,y1)){
         if ( y1 < y2) {
             std::cout<<"Case 4-1\n";
             sub_result = 1;
@@ -190,7 +191,7 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
         }
     }
 
-    if ( xp < x2 and yp == y2) {
+    if ( xp < x2 and isEqual(yp,y2)) {
         if ( y2 < y1) {
             std::cout<<"Case 4-1\n";
             sub_result = 1;
@@ -228,4 +229,23 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
         return 0;
     }
 
+}
+
+bool Polygon::isEqual(float a, float b) {
+    if ( fabs(a-b) < 0.0001){
+        //std::cout << "Correct";
+        return true;
+    }
+    return false;
+}
+
+
+bool Polygon::isLessThanOrEqual(float a, float b) {
+    //Order of the parameter matters!
+
+    if ( a < b or fabs(a-b) < 0.0001){
+        //std::cout << "Correcthiiiii\n";
+        return true;
+    }
+    return false;
 }
