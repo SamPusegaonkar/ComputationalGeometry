@@ -86,7 +86,5 @@ int main( ) {
 
 //== operator
 //floating point issue!
-
-//inheritance? -> add default constructors
 //plotting
 //remove uncessary libs
