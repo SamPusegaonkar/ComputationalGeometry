@@ -3,7 +3,6 @@
 
 
 // gcc main.cpp  Point.cpp Edge.cpp Polygon.cpp -lstdc++ -o main.o
-// gcc main.cpp  Point.cpp Edge.cpp Polygon.cpp -lstdc++ -o main.o -g -fsanitize=address
 // ./main.o
 
 int main( ) {
