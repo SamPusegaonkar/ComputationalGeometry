@@ -142,7 +142,7 @@ int Polygon::intersectEdge( std::shared_ptr<Edge> &edge, std::shared_ptr<Point>&
 
     //Case 2 : Edge is Horizontal
     if ( isEqual(y1, y2) ) {
-        std::cout<<"Case 2\n";
+        //std::cout<<"Case 2\n";
         auto x_min = x1 < x2 ? x1 : x2;
         auto x_max = x1 > x2 ? x1 : x2;
 
