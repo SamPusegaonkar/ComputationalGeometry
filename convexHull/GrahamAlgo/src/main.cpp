@@ -23,8 +23,8 @@ int main( ) {
     p.printAllPoints(sortedPoints);
     //Check the result
     p.printAllPoints();
-    p.getConvexHullPoints(sortedPoints);
-    p.printAllPoints();
+    auto result = p.getConvexHullPoints(sortedPoints);
+    p.printAllPoints(result);
 
 } 
 
