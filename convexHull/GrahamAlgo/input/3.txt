@@ -1,0 +1,12 @@
+3
+0 0 
+5 5
+0 5 
+
+
+#Query Points
+5.000000000000000000000000000000000001 5.000000000000000000000000000000000001 #Checking floating point
+100 100 #Polygon is on the left
+1.9999999999999999999999 1.9999999999999999999999999   #Floating point check
+-0.5 3   # ray goes in and out (Polygon on right)!
+1 4    #(Ray goes through one edge) inside! 
