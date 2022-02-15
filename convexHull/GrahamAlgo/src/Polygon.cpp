@@ -16,6 +16,7 @@ bool customComparator (Point& a, Point& b) {
 
 std::vector<Point> Polygon::sortPoints(std::vector<Point>&points) {
     sort(points.begin(), points.end(), customComparator);
+    return points;
 }
 
 Point Polygon::getBottomRightMostPoint(std::vector<Point>&points) {
@@ -56,7 +57,7 @@ bool Polygon::isEqual(float a, float b) {
     return false;
 }
 
-void Polygon::printAllConvexHullPoints() {
+void Polygon::printAllPoints() {
     
     for ( auto point : allPoints) {
         std::cout<< point.x << " " << point.y << "\n";
@@ -64,7 +65,7 @@ void Polygon::printAllConvexHullPoints() {
     std::cout<< "----------------------------------------\n";
 }
 
-void Polygon::printAllConvexHullPoints( std::vector<Point>& points) {
+void Polygon::printAllPoints( std::vector<Point>& points) {
     
     for ( auto point : points) {
         std::cout<< point.x << " " << point.y << "\n";
@@ -118,8 +119,10 @@ std::vector<Point> Polygon::readFile(std::string& filename) {
 
         // std::cout<< a << " " << b<< "\n";
         counter++;
-        points.push_back(Point(a, b));    
+        points.push_back(Point(a, b));
+        std::cout << "Reading Line\n";    
     }
+    std::cout << "Completed reading line\n";
     return points;
     
 }
@@ -173,4 +176,11 @@ std::vector<Point> Polygon::getConvexHullPoints(std::vector<Point>&points) {
         
     }
 
+
+    while (stack.size() < 0 ){
+        auto point = stack.top();
+        stack.pop();
+        convexHullPoints.push_back(point);
+    }
+    return convexHullPoints;
 }

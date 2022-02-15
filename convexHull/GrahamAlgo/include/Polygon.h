@@ -10,8 +10,8 @@ class Polygon {
         Point getBottomRightMostPoint(std::vector<Point>&points);
         int getIndexofBottomRightMostPoint(Point& bottomMostPoint, std::vector<Point>&points);
         std::vector<Point> getConvexHullPoints(std::vector<Point>&points);
-        void printAllConvexHullPoints();
-        void printAllConvexHullPoints(std::vector<Point>& points);
+        void printAllPoints();
+        void printAllPoints(std::vector<Point>& points);
         bool isEqual(float a, float b);
         bool isLessThanOrEqual(float a, float b);
         bool isPointOrientedCorrectly(Point& p1, Point& p2, Point& p3);

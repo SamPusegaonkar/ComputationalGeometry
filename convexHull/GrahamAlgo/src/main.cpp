@@ -18,11 +18,13 @@ int main( ) {
 
     Polygon p;
     auto points = p.readFile(filename);
+    // p.printAllPoints(points);
     auto sortedPoints = p.sortPoints(points);
+    p.printAllPoints(sortedPoints);
     //Check the result
-    p.getConvexHullPoints(sortedPoints);
-    p.printAllConvexHullPoints();
-    std::cout << "--------------------------------------------------" << "\n";
+    // p.printAllPoints();
+    // p.getConvexHullPoints(sortedPoints);
+    // p.printAllPoints();
 
 } 
 
