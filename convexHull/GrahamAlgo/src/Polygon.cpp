@@ -16,6 +16,7 @@ bool customComparator (Point& a, Point& b) {
 
 std::vector<Point> Polygon::sortPoints(std::vector<Point>&points) {
     sort(points.begin(), points.end(), customComparator);
+    allPoints = points;
     return points;
 }
 
@@ -61,7 +62,7 @@ bool Polygon::isEqual(float a, float b) {
 void Polygon::printAllPoints() {
     
     for ( auto point : allPoints) {
-        std::cout<< point.x << " " << point.y << "\n";
+        std::cout<< point.x << " " << point.y << " " << point.theta_in_radian << "\n";
     }
     std::cout<< "----------------------------------------\n";
 }
@@ -69,7 +70,7 @@ void Polygon::printAllPoints() {
 void Polygon::printAllPoints( std::vector<Point>& points) {
     
     for ( auto point : points) {
-        std::cout<< point.x << " " << point.y << point.theta_in_radian << "\n";
+        std::cout<< point.x << " " << point.y << " " << point.theta_in_radian << "\n";
     }
     std::cout<< "----------------------------------------\n";
 }
