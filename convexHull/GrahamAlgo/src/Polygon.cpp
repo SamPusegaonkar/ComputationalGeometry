@@ -46,6 +46,7 @@ int Polygon::getIndexofBottomRightMostPoint(Point& bottomMostPoint, std::vector<
         if ( isEqual(point.x, bottomMostPoint.x) && isEqual(point.y, bottomMostPoint.y))
             return i;
     }
+    return -1;
 }
 
 
@@ -68,7 +69,7 @@ void Polygon::printAllPoints() {
 void Polygon::printAllPoints( std::vector<Point>& points) {
     
     for ( auto point : points) {
-        std::cout<< point.x << " " << point.y << "\n";
+        std::cout<< point.x << " " << point.y << point.theta_in_radian << "\n";
     }
     std::cout<< "----------------------------------------\n";
 }
