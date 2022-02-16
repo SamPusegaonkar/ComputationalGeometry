@@ -36,7 +36,6 @@ int main( ) {
     plt::scatter(x, y);
     plt::title("Sample figure");
     plt::legend();
-    plt::show();
     // plt::save("./basic.png");
 
     // p.printAllPoints(points);
@@ -47,4 +46,17 @@ int main( ) {
     auto result = p.getConvexHullPoints(sortedPoints);
     p.printAllPoints(result);
 
+    std::vector<float> final_x, final_y;
+    for(auto point : result) {
+        final_x.push_back(point.x);
+        final_y.push_back(point.y);
+    }
+    plt::figure_size(1200, 780);
+    plt::plot(final_x, final_y);
+    plt::title("Sample figure");
+    plt::legend();
+    plt::show();
+
 } 
+
+// 0.48239 -0.477617

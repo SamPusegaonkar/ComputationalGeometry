@@ -11,3 +11,4 @@ Point::Point( float X, float Y ) {
 	theta_in_radian = (theta_in_radian*180)/3.141592654;
 }
 
+Point::Point() {}
