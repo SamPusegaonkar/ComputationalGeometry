@@ -8,10 +8,6 @@
 
 namespace plt = matplotlibcpp;
 
-// gcc main.cpp  Point.cpp Polygon.cpp -lstdc++ -o main.o
-// g++ main.cpp  Point.cpp Polygon.cpp -I/usr/include/python2.7 -lpython2.7 -o main.o
-// ./main.o
-
 int main( ) {
 
     //Read the input file 
