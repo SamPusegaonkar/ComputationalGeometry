@@ -103,7 +103,7 @@ std::vector<Point> Polygon::readFile(std::string& filename) {
 
     if (!myfile) {
         std::cerr << "Error: Could not find the requested file!\n";
-        return points; //TODO: throw exception!
+        return points; //Error
     }
 
     std::string line;
@@ -112,8 +112,8 @@ std::vector<Point> Polygon::readFile(std::string& filename) {
         number_of_lines = std::stoi(line);
 
     if ( number_of_lines <= 0) {
-        std::cout << "Number of lines is less than or equal to 0\n";
-        return points; //TODO: throw exception
+        std::cerr << "Number of lines is less than or equal to 0\n";
+        return points; //Error
     }
 
     // std::cout<<number_of_lines<< " :Number of lines \n";
@@ -125,14 +125,14 @@ std::vector<Point> Polygon::readFile(std::string& filename) {
         if ( counter > number_of_lines) continue;
         if (!(iss >> a >> b) && counter <= number_of_lines ) { 
             std::cout << counter << ":Counter\n";
-            std::cout << "There is something wrong with the input file!\n";
-            return points; //TODO: throw exception!
+            std::cerr << "There is something wrong with the input file!\n";
+            return points; //Error
         } 
 
         // std::cout<< a << " " << b<< "\n";
         counter++;
         points.push_back(Point(a, b));
-        std::cout << "Reading Line\n";    
+        // std::cout << "Reading Line\n";    
     }
     std::cout << "Completed reading line\n";
     return points;
@@ -147,7 +147,7 @@ bool Polygon::isPointOrientedCorrectly(Point& p1, Point& p2, Point& p3) {
     auto p3p2Y = p2.y - p3.y;
 
     auto determinent = (p3p1X * p3p2Y ) - (p3p1Y *p3p2X );
-    std::cout<< "The determinent is " << determinent << "\n";
+    // std::cout<< "The determinent is " << determinent << "\n";
     if (determinent < 0)
         return true;
     return false;
@@ -222,20 +222,20 @@ std::vector<Point> Polygon::getConvexHullPoints(std::vector<Point>&points) {
         auto middlePoint = stack.top(); //p
         stack.pop();
         auto firstOuterPoint = stack.top(); //useless ->just for declaration.
-        std::cout<< "New Iteration!\n";
+        // std::cout<< "New Iteration!\n";
 
-        std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
-        std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
-        std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
-        std::cout<< "Before While Loop!\n";
+        // std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
+        // std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
+        // std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
+        // std::cout<< "Before While Loop!\n";
 
         while( stack.size() > 0 and !isPointOrientedCorrectly(stack.top(), secondOuterPoint, middlePoint)) {
             middlePoint = stack.top();
             stack.pop();
-            std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
-            std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
-            std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
-            std::cout << "Middle Point is incorrect-------\n";
+            // std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
+            // std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
+            // std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
+            // std::cout << "Middle Point is incorrect-------\n";
             
         }
         stack.push(middlePoint);

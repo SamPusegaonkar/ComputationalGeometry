@@ -26,22 +26,19 @@ int main( ) {
         y.push_back(point.y);
     }
 
-    // // Set the size of output image to 1200x780 pixels
     plt::figure_size(1200, 780);
-    // // Plot line from given x and y data. Color is selected automatically.
+
+    //Printing all points
     plt::scatter(x, y, 2);
     plt::title("Sample figure");
     plt::legend();
-    // plt::save("./basic.png");
 
-    // p.printAllPoints(points);
     auto sortedPoints = p.sortPoints(points);
-    // p.printAllPoints(sortedPoints);
-    //Check the result
-    p.printAllPoints();
+    // p.printAllPoints();
     auto result = p.getConvexHullPoints(sortedPoints);
-    p.printAllPoints(result);
+    // p.printAllPoints(result);
 
+    //Printing all convex hull points
     std::vector<float> final_x, final_y;
     for(auto point : result) {
         final_x.push_back(point.x);
@@ -51,5 +48,3 @@ int main( ) {
     plt::show();
 
 } 
-
-// 0.48239 -0.477617
