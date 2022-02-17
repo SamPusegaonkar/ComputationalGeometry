@@ -207,6 +207,8 @@ std::vector<Point> Polygon::getConvexHullPoints(std::vector<Point>&points) {
     
     Point bottomMostPoint = getBottomRightMostPoint(points);
     int pivotIndex = getIndexofBottomRightMostPoint(bottomMostPoint, points);
+
+    std::cout<< "The first index is: " << pivotIndex << "\n";
     std::stack<Point> stack;
     
     stack.push(points[pivotIndex]);
@@ -220,20 +222,33 @@ std::vector<Point> Polygon::getConvexHullPoints(std::vector<Point>&points) {
         auto middlePoint = stack.top(); //p
         stack.pop();
         auto firstOuterPoint = stack.top(); //useless ->just for declaration.
+        std::cout<< "New Iteration!\n";
 
-        while( stack.size() != 0 and !isPointOrientedCorrectly(stack.top(), secondOuterPoint, middlePoint)) {
-            firstOuterPoint = stack.top();
+        std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
+        std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
+        std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
+        std::cout<< "Before While Loop!\n";
+
+        while( stack.size() > 0 and !isPointOrientedCorrectly(stack.top(), secondOuterPoint, middlePoint)) {
+            middlePoint = stack.top();
             stack.pop();
             std::cout<< firstOuterPoint.x << " " << firstOuterPoint.y << " " << firstOuterPoint.theta_in_radian <<"\n";
             std::cout<< middlePoint.x << " " << middlePoint.y << " " << middlePoint.theta_in_radian <<"\n";
             std::cout<< secondOuterPoint.x << " " << secondOuterPoint.y << " " << secondOuterPoint.theta_in_radian <<"\n";
-            std::cout << "Point is incorrect-------\n";
+            std::cout << "Middle Point is incorrect-------\n";
             
         }
-        stack.push(firstOuterPoint);
+        stack.push(middlePoint);
         stack.push(points[index]);
         std::cout<< "----------------------------------------------------------------------------\n";
 
+    }
+
+    Point potentialColinearPoint = stack.top();
+    stack.pop();
+
+    if(isPointOrientedCorrectly(stack.top(), bottomMostPoint, potentialColinearPoint)) {
+        stack.push(potentialColinearPoint);
     }
 
     std::cout << stack.size() << ": size of stack" << "\n";
@@ -243,5 +258,8 @@ std::vector<Point> Polygon::getConvexHullPoints(std::vector<Point>&points) {
         std::cout<< point.x << " " << point.y << " " << point.theta_in_radian <<"\n";
         convexHullPoints.push_back(point);
     }
+    std::cout << "-----------------------------------------------\n";
+    std::reverse(convexHullPoints.begin(), convexHullPoints.end());
+    convexHullPoints.push_back(bottomMostPoint);
     return convexHullPoints;
 }
