@@ -18,6 +18,12 @@ int main( ) {
 
     QuadTree qt;
     auto image = qt.readFile(filename);
+    for ( auto row : image) {
+        for ( auto value : row) {
+            std::cout << value << " .";
+        }
+        std::cout << "\n";
+    }
 
     auto rootNode = qt.buildTree(image);
     qt.getPreorderTraversal(rootNode);
