@@ -5,6 +5,28 @@
 #include "../include/QuadTree.h"
 
 Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
+    root = new Node();
+    return buildTreeHelper(root, 0, 0, matrix_size);
+}
+
+Node* QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size) {
+
+    // if ( matrix_size == 1) {
+    //     node->type = setNodeType(row, col);
+    // }
+    // else{
+    //     int color = image[row][col];
+
+    // }
+
+
+}
+
+char QuadTree::setNodeType(int row, int col){
+
+    if ( image[row][col] == 1)
+        return 'W';
+    return 'B';
 
 }
 
@@ -18,7 +40,6 @@ void QuadTree::getPreorderTraversal(Node* root) {
 std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
 
     std::fstream myfile(filename, std::ios_base::in);
-    std::vector<std::vector<int>> image;
 
     if (!myfile) {
         std::cerr << "Error: Could not find the requested file!\n";
@@ -26,18 +47,16 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
     }
 
     std::string line;
-    int row_size = 0;
+    int matrix_size = 0;
     if (getline(myfile, line)) 
-        row_size = std::stoi(line);
+        matrix_size = std::stoi(line);
 
-    if ( row_size <= 0) {
+    if ( matrix_size <= 0) {
         std::cerr << "Number of rows is less than or equal to 0\n";
         return image; //Error
     }
-    int col_size = row_size;
 
-    std::cout<<row_size << " " << col_size << " : Number of rows and cols \n";
-    
+    std::cout << matrix_size << " " << matrix_size << " : Number of rows and cols \n";
     
     int counter = 1;
     std::string linetxt;
@@ -45,13 +64,7 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
         std::istringstream iss(linetxt);
         int a;
         std::vector<int>row;
-        if ( counter > row_size) continue;
-        // if (!(iss >> a) && counter <= row_size ) { 
-        //     std::cout << counter << ":Counter\n";
-        //     std::cerr << "There is something wrong with the input file!\n";
-        //     return image; //Error
-        // } 
-
+        if ( counter > matrix_size) continue;
         while ( iss >> a) {
             row.push_back(a);
         }

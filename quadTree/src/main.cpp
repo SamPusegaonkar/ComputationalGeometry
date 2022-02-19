@@ -20,7 +20,7 @@ int main( ) {
     auto image = qt.readFile(filename);
     for ( auto row : image) {
         for ( auto value : row) {
-            std::cout << value << " .";
+            std::cout << value << " ";
         }
         std::cout << "\n";
     }
