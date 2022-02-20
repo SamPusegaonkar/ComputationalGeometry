@@ -23,6 +23,7 @@ Node* QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size) {
                 int pixel = image[current_row][current_col];
                 if ( pixel != color) {
                     std::cout << "SPLIT " << current_row << " " << current_col << "\n";
+                    ///CREATE NEW NODE ( I THINK)
                     buildTreeHelper(node->north_west, getBlockStartRow(current_row, row), getBlockStartCol(current_col, col), matrix_size/2);
                     buildTreeHelper(node->north_east, getBlockStartRow(current_row, row), col - getBlockStartCol(current_col, col), matrix_size/2);
                     buildTreeHelper(node->south_west, row - getBlockStartRow(current_row, row), getBlockStartCol(current_col, col), matrix_size/2);
