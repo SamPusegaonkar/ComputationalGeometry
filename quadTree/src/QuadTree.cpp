@@ -17,21 +17,39 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
     }
     else{
         int color = image[row][col];
+
         for ( int current_row = row; current_row < matrix_size; current_row++ ) {
             for ( int current_col = col; current_col < matrix_size; current_col++ ) {
                 int pixel = image[current_row][current_col];
-                if ( pixel != color) {
+                if ( pixel != color && splits.find(depth) == splits.end()) {
+                    splits.insert(depth);
                     std::cout << "FIND a pixel with different value at " << current_col+1 << " " << current_row+1 <<" " << matrix_size << " \n";
                     std::cout << "SPLIT block " << depth << "\n";
-                    int corner_row = getBlockStartRow(current_row, matrix_size);
-                    int corner_col = getBlockStartCol(current_col, matrix_size);
-                    std::cout << corner_row << " " << corner_col << "\n";
+                    // int corner_row = matrix_size/2 - getBlockStartRow(current_row, row);
+                    // int corner_col = getBlockStartCol(current_col, matrix_size);
+                    // std::cout << corner_row << " " << corner_col << "\n";
 
                     node->initChildren();
-                    buildTreeHelper(node->north_west, corner_row, corner_col, matrix_size/2, 4*depth+1);
-                    // buildTreeHelper(node->north_east, getBlockStartRow(current_row, row), col - getBlockStartCol(current_col, col), matrix_size/2, 4*depth+2);
-                    // buildTreeHelper(node->south_west, row - getBlockStartRow(current_row, row), getBlockStartCol(current_col, col), matrix_size/2, 4*depth+3);
-                    // buildTreeHelper(node->south_east, row - getBlockStartRow(current_row, row), col - getBlockStartCol(current_col, col), matrix_size/2, 4*depth+4);
+
+                    buildTreeHelper(node->north_west, 
+                        getBlockStartRow(current_row, matrix_size), 
+                        getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2, 4*depth+1);
+
+                    buildTreeHelper(node->north_east, 
+                        getBlockStartRow(current_row, matrix_size), 
+                        matrix_size/2 - getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2, 4*depth+2);
+
+                    buildTreeHelper(node->south_west, 
+                        matrix_size/2 - getBlockStartRow(current_row, matrix_size), 
+                        getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2, 4*depth+3);
+
+                    buildTreeHelper(node->south_east, 
+                        matrix_size/2 - getBlockStartRow(current_row, matrix_size), 
+                        matrix_size/2 - getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2, 4*depth+4);
                 }
             }
         }
@@ -39,33 +57,32 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
     }
 }
 
-//get corner of the blocks
+//repeated split numbers? ->maybe set
 //for loop range
 
 
 
 int QuadTree::getBlockStartRow(int current_row, int total_rows) {
-    std::cout << "Getting the start row of the block\n";
-    std::cout << current_row << " " << total_rows << "\n";
+    // std::cout << "Getting the start row of the block\n";
+    // std::cout << current_row << " " << total_rows << "\n";
     if ( current_row < (total_rows/2)) {
-        std::cout << "Returning 0 - from if\n";
+        // std::cout << "Returning 0 - from if\n";
         return 0;
     }
-    std::cout << "Returning "<< (total_rows/2) << "\n";
+    // std::cout << "Returning "<< (total_rows/2) << "\n";
     return (total_rows/2);
 
 }
 
 int QuadTree::getBlockStartCol(int current_col, int total_cols) {
-    std::cout << "Getting the start col of the block\n";
-    std::cout << current_col << " " << total_cols << "\n";
-    std::cout << total_cols/2 << "\n";
+    // std::cout << "Getting the start col of the block\n";
+    // std::cout << current_col << " " << total_cols << "\n";
     if ( current_col < (total_cols/2)) {
-        std::cout << "Returning 0 - from if\n";
+        // std::cout << "Returning 0 - from if\n";
         return 0;
     }
         
-    std::cout << "Returning "<< (total_cols/2) << "\n";
+    // std::cout << "Returning "<< (total_cols/2) << "\n";
     return (total_cols/2);
     
 }

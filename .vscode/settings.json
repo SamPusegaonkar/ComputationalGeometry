@@ -76,6 +76,7 @@
         "condition_variable": "cpp",
         "list": "cpp",
         "mutex": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "unordered_set": "cpp"
     }
 }

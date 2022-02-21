@@ -1,11 +1,13 @@
 #include "Node.h"
 #include <vector>
 #include <string>
+#include <unordered_set>
 
 class QuadTree {
     public:
         Node* root = NULL;
         int matrix_size = 0;
+        std::unordered_set<int>splits;
         std::vector<std::vector<int>> image;
         Node* buildTree(std::vector<std::vector<int>>& image);
         Node* getIntersection( Node* firstTree, Node* secondTree);
