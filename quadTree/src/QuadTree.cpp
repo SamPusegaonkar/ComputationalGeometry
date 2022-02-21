@@ -6,28 +6,28 @@
 
 Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
     root = new Node();
+    std::cout<< "Entering\n";
     buildTreeHelper(root, 0, 0, matrix_size, 0);
+    
     return root;
 }
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
+    std::cout << row << " " << col << " "  << matrix_size << " " << depth << "\n";
     if ( matrix_size == 1) {    
         node->type = setNodeType(row, col);
         return;
     }
     else{
         int color = image[row][col];
-
+        
         for ( int current_row = row; current_row < matrix_size; current_row++ ) {
             for ( int current_col = col; current_col < matrix_size; current_col++ ) {
                 int pixel = image[current_row][current_col];
-                if ( pixel != color && splits.find(depth) == splits.end()) {
-                    splits.insert(depth);
+                if ( pixel != color) {
+                    // std::cout << "OG color: " << color << " found color:" << pixel << "\n";
                     std::cout << "FIND a pixel with different value at " << current_col+1 << " " << current_row+1 <<" " << matrix_size << " \n";
                     std::cout << "SPLIT block " << depth << "\n";
-                    // int corner_row = matrix_size/2 - getBlockStartRow(current_row, row);
-                    // int corner_col = getBlockStartCol(current_col, matrix_size);
-                    // std::cout << corner_row << " " << corner_col << "\n";
 
                     node->initChildren();
 
@@ -50,15 +50,17 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
                         matrix_size/2 - getBlockStartRow(current_row, matrix_size), 
                         matrix_size/2 - getBlockStartCol(current_col, matrix_size), 
                         matrix_size/2, 4*depth+4);
+
                 }
             }
         }
-        
+        return;
     }
 }
 
-//repeated split numbers? ->maybe set
 //for loop range
+//repeated split numbers? ->maybe set
+
 
 
 
