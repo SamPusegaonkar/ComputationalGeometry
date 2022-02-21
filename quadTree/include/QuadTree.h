@@ -11,11 +11,9 @@ class QuadTree {
         Node* getIntersection( Node* firstTree, Node* secondTree);
         void getPreorderTraversal(Node* root);
         std::vector<std::vector<int>> readFile(std::string& filename);
-        Node* buildTreeHelper(Node* node, int row, int col, int matrix_size);
-        char setNodeType(int row, int col);
+        void buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth);
+        char setNodeType(int& row, int& col);
         int getBlockStartRow(int current_row, int total_rows);
         int getBlockStartCol(int current_col, int total_cols);
-
-
         
 };

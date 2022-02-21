@@ -29,6 +29,7 @@ int main( ) {
     }
 
     auto rootNode = qt.buildTree(image);
+    std::cout << "SPLIT COMPLETED\n";
     std::cout << "START RQ\n";
     // qt.getPreorderTraversal(rootNode);
     std::cout << "END RQ\n";

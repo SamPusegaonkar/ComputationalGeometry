@@ -7,6 +7,7 @@ class Node {
         Node* south_east = nullptr;
         Node( char node_type, Node* nw, Node* ne, Node* sw, Node* se);
         Node();
-        int left_i = 0;
+        void initChildren();
+
 
 };
