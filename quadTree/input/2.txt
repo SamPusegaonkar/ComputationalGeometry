@@ -3,3 +3,15 @@
 0 0 1 1 
 0 0 0 1 
 0 0 0 0  
+
+//og = 1
+4(nw,)->2(nw,  )->1(return)
+
+
+#when is the split block counter updated?
+//inorder -> 
+
+node (0)
+4 children of node-> nw, ne ,sw, se size 2. [4*i+1] = [1]
+nw(1)
+
