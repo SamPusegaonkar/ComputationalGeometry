@@ -13,7 +13,7 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
 }
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
-    std::cout << row << " " << col << " "  << matrix_size << " " << depth << "\n";
+    // std::cout << row << " " << col << " "  << matrix_size << " " << depth << "\n";
     if ( matrix_size == 1) {    
         node->type = setNodeType(row, col);
         return;
@@ -21,8 +21,8 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
     else{
         int color = image[row][col];
         
-        for ( int current_row = row; current_row < matrix_size; current_row++ ) {
-            for ( int current_col = col; current_col < matrix_size; current_col++ ) {
+        for ( int current_row = row; current_row < row + matrix_size; current_row++ ) {
+            for ( int current_col = col; current_col < col + matrix_size; current_col++ ) {
                 int pixel = image[current_row][current_col];
                 if ( pixel != color) {
                     // std::cout << "OG color: " << color << " found color:" << pixel << "\n";
@@ -32,23 +32,23 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
                     node->initChildren();
 
                     buildTreeHelper(node->north_west, 
-                        getBlockStartRow(current_row, matrix_size), 
-                        getBlockStartCol(current_col, matrix_size), 
+                        getBlockStartRow(row, matrix_size), 
+                        getBlockStartCol(col, matrix_size), 
                         matrix_size/2, 4*depth+1);
 
                     buildTreeHelper(node->north_east, 
-                        getBlockStartRow(current_row, matrix_size), 
-                        matrix_size/2 - getBlockStartCol(current_col, matrix_size), 
+                        getBlockStartRow(row, matrix_size), 
+                        matrix_size/2 + getBlockStartCol(col, matrix_size), 
                         matrix_size/2, 4*depth+2);
 
                     buildTreeHelper(node->south_west, 
-                        matrix_size/2 - getBlockStartRow(current_row, matrix_size), 
-                        getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2 + getBlockStartRow(row, matrix_size), 
+                        getBlockStartCol(col, matrix_size), 
                         matrix_size/2, 4*depth+3);
 
                     buildTreeHelper(node->south_east, 
-                        matrix_size/2 - getBlockStartRow(current_row, matrix_size), 
-                        matrix_size/2 - getBlockStartCol(current_col, matrix_size), 
+                        matrix_size/2 + getBlockStartRow(row, matrix_size), 
+                        matrix_size/2 + getBlockStartCol(col, matrix_size), 
                         matrix_size/2, 4*depth+4);
 
                 }
@@ -57,12 +57,6 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
         return;
     }
 }
-
-//for loop range
-//repeated split numbers? ->maybe set
-
-
-
 
 int QuadTree::getBlockStartRow(int current_row, int total_rows) {
     // std::cout << "Getting the start row of the block\n";
