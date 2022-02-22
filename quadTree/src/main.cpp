@@ -31,8 +31,11 @@ int main( ) {
     auto rootNode = qt.buildTree(image);
     std::cout << "SPLIT COMPLETED\n";
     std::cout << "START RQ\n";
-    // qt.getPreorderTraversal(rootNode);
+    qt.getPreorderTraversal(rootNode);
     std::cout << "END RQ\n";
+    // int depth, count;
+    for (auto it : qt.depthColors) 
+        std::cout << " " << it.first << ":" << it.second.size() << std::endl;
     
     // auto intersection_root_node = qt.getIntersection(tree1, tree2);
     // qt.getPreorderTraversal(intersection_root_node);

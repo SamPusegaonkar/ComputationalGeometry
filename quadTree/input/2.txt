@@ -16,3 +16,16 @@ node (0)
 nw(1)
 
 //0 is the split which converts 4x4 to 2x2
+0 GRAY
+1 GRAY
+5 BLACK
+6 WHITE
+7 WHITE
+8 WHITE
+2 BLACK
+3 WHITE
+4 GRAY
+17 WHITE
+18 BLACK
+19 WHITE
+20 WHITE

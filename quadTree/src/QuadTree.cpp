@@ -8,24 +8,36 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
     root = new Node();
     std::cout<< "Entering\n";
     buildTreeHelper(root, 0, 0, matrix_size, 0);
-    
     return root;
 }
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
-    // std::cout << row << " " << col << " "  << matrix_size << " " << depth << "\n";
+    node->depth = depth;
+    if( depthColors.find(depth) == depthColors.end()) {
+        std::unordered_set<int>colors;
+        depthColors[depth] = colors;
+    }
+
     if ( matrix_size == 1) {    
         node->type = setNodeType(row, col);
         return;
     }
     else{
-        int color = image[row][col];
         
+        int color = image[row][col];
+
         for ( int current_row = row; current_row < row + matrix_size; current_row++ ) {
             for ( int current_col = col; current_col < col + matrix_size; current_col++ ) {
+                
                 int pixel = image[current_row][current_col];
+
+                if( depthColors.find(depth) == depthColors.end()) {
+                    std::unordered_set<int>colors;
+                    depthColors[depth] = colors;
+                }
+                depthColors[depth].insert(pixel);
+
                 if ( pixel != color) {
-                    // std::cout << "OG color: " << color << " found color:" << pixel << "\n";
                     std::cout << "FIND a pixel with different value at " << current_col+1 << " " << current_row+1 <<" " << matrix_size << " \n";
                     std::cout << "SPLIT block " << depth << "\n";
 
@@ -52,11 +64,16 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
                         matrix_size/2, 4*depth+4);
 
                 }
-            }
-        }
-        return;
+            }  
+        } 
+        if ( depthColors[depth].size() == 2)
+            node->type = setNodeType(row, col);
+        else
+            node->type = image[row][col] == 1 ? 'B' : 'W';
     }
 }
+
+
 
 int QuadTree::getBlockStartRow(int current_row, int total_rows) {
     // std::cout << "Getting the start row of the block\n";
@@ -86,7 +103,7 @@ int QuadTree::getBlockStartCol(int current_col, int total_cols) {
 
 char QuadTree::setNodeType(int& row, int& col){
 
-    if ( image[row][col] == 1)
+    if ( image[row][col] == 0)
         return 'W';
     return 'B';
 
@@ -96,14 +113,14 @@ Node* QuadTree::getIntersection( Node* firstTree, Node* secondTree) {
 
 }
 void QuadTree::getPreorderTraversal(Node* node) {
-    if ( root == NULL) {
+    if ( node == nullptr) {
         return;
     }
-    
+    std::cout << node->depth << " " << node->type << "\n";
     getPreorderTraversal(node->north_west);
     getPreorderTraversal(node->north_east);
     getPreorderTraversal(node->south_west);
-    getPreorderTraversal(node->south_west);
+    getPreorderTraversal(node->south_east);
 }
 
 std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
