@@ -13,12 +13,14 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
     node->depth = depth;
-    if( depthColors.find(depth) == depthColors.end()) {
-        std::unordered_set<int>colors;
-        depthColors[depth] = colors;
-    }
 
-    if ( matrix_size == 1) {    
+    if ( matrix_size == 1) {  
+        if( depthColors.find(depth) == depthColors.end()) {
+            std::unordered_set<int>colors;
+            depthColors[depth] = colors;
+        }
+        int pixel = image[row][col];
+        depthColors[depth].insert(pixel);  
         node->type = setNodeType(row, col);
         return;
     }
@@ -66,10 +68,8 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
                 }
             }  
         } 
-        if ( depthColors[depth].size() == 2)
+        if ( depthColors[depth].size() == 1 or matrix_size == 1)
             node->type = setNodeType(row, col);
-        else
-            node->type = image[row][col] == 1 ? 'B' : 'W';
     }
 }
 
