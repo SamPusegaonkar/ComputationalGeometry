@@ -13,6 +13,7 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
     node->depth = depth;
+    std::cout << node->depth << " " <<node->type<< row<<" " <<col << " " << matrix_size <<" \n";
 
     if ( matrix_size == 1) {  
         if( depthColors.find(depth) == depthColors.end()) {
@@ -20,8 +21,10 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
             depthColors[depth] = colors;
         }
         int pixel = image[row][col];
-        depthColors[depth].insert(pixel);  
+        depthColors[depth].insert(pixel);
+
         node->type = setNodeType(row, col);
+        // std::cout << node->depth << " " <<node->type<< row<<" " <<col <<" matrix size = 1\n";
         return;
     }
     else{
@@ -41,35 +44,39 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
 
                 if ( pixel != color) {
                     std::cout << "FIND a pixel with different value at " << current_col+1 << " " << current_row+1 <<" " << matrix_size << " \n";
+                    std::cout << row << " " << col << " \n";
+
                     std::cout << "SPLIT block " << depth << "\n";
 
                     node->initChildren();
 
                     buildTreeHelper(node->north_west, 
-                        getBlockStartRow(row, matrix_size), 
-                        getBlockStartCol(col, matrix_size), 
+                        row, 
+                        col, 
                         matrix_size/2, 4*depth+1);
 
                     buildTreeHelper(node->north_east, 
-                        getBlockStartRow(row, matrix_size), 
-                        matrix_size/2 + getBlockStartCol(col, matrix_size), 
+                        row, 
+                        matrix_size/2 + col, 
                         matrix_size/2, 4*depth+2);
 
                     buildTreeHelper(node->south_west, 
-                        matrix_size/2 + getBlockStartRow(row, matrix_size), 
-                        getBlockStartCol(col, matrix_size), 
+                        matrix_size/2 + row, 
+                        col, 
                         matrix_size/2, 4*depth+3);
 
                     buildTreeHelper(node->south_east, 
-                        matrix_size/2 + getBlockStartRow(row, matrix_size), 
-                        matrix_size/2 + getBlockStartCol(col, matrix_size), 
+                        matrix_size/2 + row, 
+                        matrix_size/2 + col, 
                         matrix_size/2, 4*depth+4);
 
                 }
             }  
         } 
-        if ( depthColors[depth].size() == 1 or matrix_size == 1)
+        if ( depthColors[depth].size() == 1) {
             node->type = setNodeType(row, col);
+            // std::cout << node->depth << " " <<node->type << " " <<matrix_size <<" matrix size = more?\n";
+        }
     }
 }
 
@@ -163,3 +170,15 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
     return image;
 
 }
+
+
+///
+/*
+
+9 depth can come from
+0 = 1,2,3,4
+1 = 5,6,7,8
+2 = 9,10,11,12
+
+
+*/
