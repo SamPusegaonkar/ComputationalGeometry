@@ -92,7 +92,7 @@ std::string QuadTree::setNodeType(int& row, int& col){
 void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node* thirdTreeNode) {
     // std::cout << "Entering!\n";
     thirdTreeNode->depth = firstTreeNode->depth;
-
+    
     if ( firstTreeNode->type == "WHITE" or secondTreeNode->type == "WHITE") {
         thirdTreeNode->type = "WHITE";
     }
@@ -111,6 +111,8 @@ void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node*
     }
     else{
         thirdTreeNode->initChildren();
+        std::cout << firstTreeNode->depth  << " " << firstTreeNode->type << " " << secondTreeNode->type << " "
+                  << thirdTreeNode->type << "\n";
         getIntersection(firstTreeNode->north_west, secondTreeNode->north_west, thirdTreeNode->north_west);
         getIntersection(firstTreeNode->north_east, secondTreeNode->north_east, thirdTreeNode->north_east);
         getIntersection(firstTreeNode->south_west, secondTreeNode->south_west, thirdTreeNode->south_west);
@@ -127,6 +129,7 @@ void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node*
     }
     std::cout << firstTreeNode->depth  << " " << firstTreeNode->type << " " << secondTreeNode->type << " "
                   << thirdTreeNode->type << "\n";
+    
 }
 
 Node* QuadTree::copyRecursively( Node* node) {
