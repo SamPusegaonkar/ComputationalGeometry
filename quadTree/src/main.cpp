@@ -47,8 +47,9 @@ int main( ) {
     qt1.getIntersection(tree1, tree2, intersection_root_node);
     std::cout << "END INTERSECTION\n";
     std::cout << "---------------------------------------------\n";
-
+    std::cout << "START RQ\n";
     qt1.getPreorderTraversal(intersection_root_node);
+    std::cout << "START RQ\n";
 
 } 
 
