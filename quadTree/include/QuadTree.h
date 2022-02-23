@@ -17,7 +17,7 @@ class QuadTree {
         void getPreorderTraversal(Node* root);
         std::vector<std::vector<int>> readFile(std::string& filename);
         void buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth);
-        char setNodeType(int& row, int& col);
+        std::string setNodeType(int& row, int& col);
         Node* copyRecursively(Node* node);
         
 };

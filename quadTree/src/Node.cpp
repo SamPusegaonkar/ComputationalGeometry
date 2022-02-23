@@ -2,11 +2,11 @@
 
 Node::Node() {}
 
-Node::Node( char node_type) {
+Node::Node( std::string node_type) {
     this->type = node_type;
 }
 
-Node::Node( char node_type, int depth_) {
+Node::Node( std::string node_type, int depth_) {
     this->type = node_type;
     this->depth = depth_;
 }
