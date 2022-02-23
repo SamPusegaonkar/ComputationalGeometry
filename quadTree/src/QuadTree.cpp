@@ -13,7 +13,7 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
 
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
     node->depth = depth;
-    std::cout << node->depth << " " <<node->type<< row<<" " <<col << " " << matrix_size <<" \n";
+    // std::cout << node->depth << " " <<node->type<< row<<" " <<col << " " << matrix_size <<" \n";
 
     if ( matrix_size == 1) {  
         if( depthColors.find(depth) == depthColors.end()) {
@@ -44,7 +44,7 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
 
                 if ( pixel != color) {
                     std::cout << "FIND a pixel with different value at " << current_col+1 << " " << current_row+1 <<" " << matrix_size << " \n";
-                    std::cout << row << " " << col << " \n";
+                    // std::cout << row << " " << col << " \n";
 
                     std::cout << "SPLIT block " << depth << "\n";
 
@@ -81,33 +81,6 @@ void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, in
 }
 
 
-
-int QuadTree::getBlockStartRow(int current_row, int total_rows) {
-    // std::cout << "Getting the start row of the block\n";
-    // std::cout << current_row << " " << total_rows << "\n";
-    if ( current_row < (total_rows/2)) {
-        // std::cout << "Returning 0 - from if\n";
-        return 0;
-    }
-    // std::cout << "Returning "<< (total_rows/2) << "\n";
-    return (total_rows/2);
-
-}
-
-int QuadTree::getBlockStartCol(int current_col, int total_cols) {
-    // std::cout << "Getting the start col of the block\n";
-    // std::cout << current_col << " " << total_cols << "\n";
-    if ( current_col < (total_cols/2)) {
-        // std::cout << "Returning 0 - from if\n";
-        return 0;
-    }
-        
-    // std::cout << "Returning "<< (total_cols/2) << "\n";
-    return (total_cols/2);
-    
-}
-
-
 char QuadTree::setNodeType(int& row, int& col){
 
     if ( image[row][col] == 0)
@@ -116,9 +89,53 @@ char QuadTree::setNodeType(int& row, int& col){
 
 }
 
-Node* QuadTree::getIntersection( Node* firstTree, Node* secondTree) {
+void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node* thirdTreeNode) {
+    std::cout << "Entering!\n";
+    if ( firstTreeNode->type == 'W' or secondTreeNode->type == 'W') {
+        thirdTreeNode->type = 'W';
+    }
+    else if ( firstTreeNode->type == 'B') {
+        thirdTreeNode = copyRecursively(secondTreeNode);
+ 
+    }
+    else if ( firstTreeNode->type == 'B') {
+        thirdTreeNode = copyRecursively(firstTreeNode);
+
+    }
+    else{
+        // thirdTreeNode = new Node('G');
+        thirdTreeNode->initChildren();
+        getIntersection(firstTreeNode->north_west, secondTreeNode->north_west, thirdTreeNode->north_west);
+        getIntersection(firstTreeNode->north_east, secondTreeNode->north_east, thirdTreeNode->north_east);
+        getIntersection(firstTreeNode->south_west, secondTreeNode->south_west, thirdTreeNode->south_west);
+        getIntersection(firstTreeNode->south_east, secondTreeNode->south_east, thirdTreeNode->south_east);
+        if (thirdTreeNode->north_west->type == 'W' and thirdTreeNode->north_east->type == 'W' and 
+            thirdTreeNode->south_west->type == 'W' and thirdTreeNode->south_east->type == 'W'){
+            thirdTreeNode->type = 'W';
+        }
+        
+    }
+    thirdTreeNode->depth = firstTreeNode->depth;
+    std::cout << firstTreeNode->depth  << " " << firstTreeNode->type << " "
+                  << secondTreeNode->depth << " " << secondTreeNode->type << " "
+                  << thirdTreeNode->type << " " << thirdTreeNode->depth << "\n";
 
 }
+
+Node* QuadTree::copyRecursively( Node* node) {
+
+    if ( node == NULL) {
+        return node;
+    }
+    Node* rootNode = new Node(node->type);
+    rootNode->north_west = copyRecursively(node->north_west);
+    rootNode->north_east = copyRecursively(node->north_east);
+    rootNode->south_west = copyRecursively(node->south_west);
+    rootNode->south_east = copyRecursively(node->south_east);
+    return rootNode;
+}
+
+
 void QuadTree::getPreorderTraversal(Node* node) {
     if ( node == nullptr) {
         return;
@@ -172,13 +189,3 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
 }
 
 
-///
-/*
-
-9 depth can come from
-0 = 1,2,3,4
-1 = 5,6,7,8
-2 = 9,10,11,12
-
-
-*/
