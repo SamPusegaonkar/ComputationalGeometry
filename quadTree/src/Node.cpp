@@ -6,6 +6,10 @@ Node::Node( char node_type) {
     this->type = node_type;
 }
 
+Node::Node( char node_type, int depth_) {
+    this->type = node_type;
+    this->depth = depth_;
+}
 
 void Node::initChildren() {
     this->north_west = new Node();

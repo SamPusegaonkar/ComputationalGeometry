@@ -90,20 +90,26 @@ char QuadTree::setNodeType(int& row, int& col){
 }
 
 void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node* thirdTreeNode) {
-    std::cout << "Entering!\n";
+    // std::cout << "Entering!\n";
+    thirdTreeNode->depth = firstTreeNode->depth;
+
     if ( firstTreeNode->type == 'W' or secondTreeNode->type == 'W') {
         thirdTreeNode->type = 'W';
     }
     else if ( firstTreeNode->type == 'B') {
+        // std::cout <<secondTreeNode->depth << " depth!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
         thirdTreeNode = copyRecursively(secondTreeNode);
+        // getPreorderTraversal(thirdTreeNode);
+        // std::cout <<secondTreeNode->depth << " completed!_!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-\n";
  
     }
-    else if ( firstTreeNode->type == 'B') {
+    else if ( secondTreeNode->type == 'B') {
+        // std::cout <<secondTreeNode->depth << " depth-----------------------------------------\n";
         thirdTreeNode = copyRecursively(firstTreeNode);
-
+        // getPreorderTraversal(thirdTreeNode);
+        // std::cout <<secondTreeNode->depth << " completed!_!_1-1--1-1-1-1--1-1-1-1--1-1-1-\n";
     }
     else{
-        // thirdTreeNode = new Node('G');
         thirdTreeNode->initChildren();
         getIntersection(firstTreeNode->north_west, secondTreeNode->north_west, thirdTreeNode->north_west);
         getIntersection(firstTreeNode->north_east, secondTreeNode->north_east, thirdTreeNode->north_east);
@@ -115,19 +121,17 @@ void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node*
         }
         
     }
-    thirdTreeNode->depth = firstTreeNode->depth;
-    std::cout << firstTreeNode->depth  << " " << firstTreeNode->type << " "
-                  << secondTreeNode->depth << " " << secondTreeNode->type << " "
-                  << thirdTreeNode->type << " " << thirdTreeNode->depth << "\n";
-
+    // std::cout << firstTreeNode->depth  << " " << firstTreeNode->type << " "
+                //   << secondTreeNode->depth << " " << secondTreeNode->type << " "
+                //   << thirdTreeNode->type << " " << thirdTreeNode->depth << "\n";
 }
 
 Node* QuadTree::copyRecursively( Node* node) {
 
-    if ( node == NULL) {
-        return node;
+    if ( node == nullptr) {
+        return nullptr;
     }
-    Node* rootNode = new Node(node->type);
+    Node* rootNode = new Node(node->type, node->depth);
     rootNode->north_west = copyRecursively(node->north_west);
     rootNode->north_east = copyRecursively(node->north_east);
     rootNode->south_west = copyRecursively(node->south_west);
