@@ -99,8 +99,8 @@ void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node*
     else if ( firstTreeNode->type == "BLACK") {
         std::cout <<secondTreeNode->depth << " depth!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
         thirdTreeNode = copyRecursively(secondTreeNode);
-        getPreorderTraversal(thirdTreeNode);
-        std::cout <<secondTreeNode->depth << " completed!_!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-\n";
+        // getPreorderTraversal(thirdTreeNode);
+        // std::cout <<secondTreeNode->depth << " completed!_!&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&-\n";
  
     }
     else if ( secondTreeNode->type == "BLACK") {
@@ -132,10 +132,10 @@ void QuadTree::getIntersection( Node* firstTreeNode, Node* secondTreeNode, Node*
     
 }
 
-Node* QuadTree::copyRecursively( Node* node) {
+Node* QuadTree::copyRecursively( Node* node ) {
 
     if ( node == nullptr) {
-        return nullptr;
+        return new Node();
     }
     Node* rootNode = new Node(node->type, node->depth);
     rootNode->initChildren();
@@ -143,11 +143,11 @@ Node* QuadTree::copyRecursively( Node* node) {
     rootNode->north_east = copyRecursively(node->north_east);
     rootNode->south_west = copyRecursively(node->south_west);
     rootNode->south_east = copyRecursively(node->south_east);
-    std::cout << rootNode->type << " " << rootNode->depth << " copying\n";
-    if ( rootNode->north_east != nullptr)
-        std::cout << rootNode->north_east->type << " " << rootNode->north_east->depth << " copying\n";
-    else
-        std::cout << "found nothing\n";
+    // std::cout << rootNode->type << " " << rootNode->depth << " copying\n";
+    // if ( rootNode->north_east != nullptr)
+    //     std::cout << rootNode->north_east->type << " " << rootNode->north_east->depth << " copying\n";
+    // else
+    //     std::cout << "found nothing\n";
 
     return rootNode;
 }
@@ -166,9 +166,9 @@ void QuadTree::getPreorderTraversal(Node* node) {
     getPreorderTraversal(node->north_east);
     getPreorderTraversal(node->south_west);
     getPreorderTraversal(node->south_east);
-    std::cout << node->type << " " << node->depth << " copying\n";
-    if ( node->north_east == nullptr)
-        std::cout << "found nothing\n"; 
+    // std::cout << node->type << " " << node->depth << " copying\n";
+    // if ( node->north_east == nullptr)
+    //     std::cout << "found nothing\n"; 
 
 }
 
