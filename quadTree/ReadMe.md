@@ -15,10 +15,17 @@
     0. Downlaod this zip file </br> 
     1. Open Terminal </br>
     2. Type: cd quadTree/src </br>
-    3. Type: g++ main.cpp  Node.cpp QuadTree.cpp -I/usr/include/python2.7 -lpython2.7 -o main.o </br>
-    4. Type: ./main.o
-    4. Enter the name of your input file which as a image in it </br>
-    7. Enjoy!
+
+    3. To Build and Print the Tree:
+    3. Type: gcc runBuildQuadTree.cpp QuadTree.cpp Node.cpp -lstdc++ -o runBuildQuadTree.o </br>
+    3. Type: ./runBuildQuadTree.o
+
+    4. To run the intersection program:
+    4. Type: gcc runGetIntersection.cpp QuadTree.cpp Node.cpp -lstdc++ -o runGetIntersection.o </br>
+    4. Type: ./runGetIntersection.o
+
+    5. Follow the instructions on the terminal
+    6. Enjoy!
 
   <h2>Notes": </h2>
   
