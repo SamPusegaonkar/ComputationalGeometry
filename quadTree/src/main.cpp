@@ -44,7 +44,7 @@ int main( ) {
     std::cout << "---------------------------------------------\n";
     std::cout << "START INTERSECTION\n";
 
-    qt1.getIntersection(tree1, tree2, intersection_root_node);
+    intersection_root_node = qt1.getIntersection(tree1, tree2);
     std::cout << "END INTERSECTION\n";
     std::cout << "---------------------------------------------\n";
     std::cout << "START RQ\n";

@@ -13,7 +13,7 @@ class QuadTree {
         std::unordered_set<int>splits;
         std::vector<std::vector<int>> image;
         Node* buildTree(std::vector<std::vector<int>>& image);
-        void getIntersection( Node* firstTree, Node* secondTree, Node* thirdTree);
+        Node* getIntersection( Node* firstTree, Node* secondTree);
         void getPreorderTraversal(Node* root);
         std::vector<std::vector<int>> readFile(std::string& filename);
         void buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth);
