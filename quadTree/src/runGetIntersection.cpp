@@ -36,7 +36,9 @@ int main( ) {
     std::cout << "---------------------------------------------\n";
     std::cout << "START RQ\n";
     qt1.getPreorderTraversal(intersection_root_node);
-    std::cout << "START RQ\n";
+    std::cout << "END RQ\n";
+    std::cout << "---------------------------------------------\n";
+
 
 } 
 

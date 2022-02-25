@@ -20,16 +20,17 @@ int main( ) {
 
     QuadTree qt;
     auto image = qt.readFile(filename);
-
+    std::cout << "---------------------------------------------\n";
     //Building Tree
     auto rootNode = qt.buildTree(image);
     std::cout << "SPLIT COMPLETED\n";
-    std::cout << "START RQ\n";
+    std::cout << "---------------------------------------------\n";
 
     //Preorder Tree
+    std::cout << "START RQ\n";
     qt.getPreorderTraversal(rootNode);
     std::cout << "END RQ\n";
-
+    std::cout << "---------------------------------------------\n";
 
 
 } 

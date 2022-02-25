@@ -6,7 +6,7 @@
 
 Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
     root = new Node();
-    std::cout<< "Entering\n";
+    // std::cout<< "Entering\n";
     buildTreeHelper(root, 0, 0, matrix_size, 0);
     return root;
 }
@@ -203,7 +203,7 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
         return image; //Error
     }
 
-    std::cout << matrix_size << " " << matrix_size << " : Number of rows and cols \n";
+    // std::cout << matrix_size << " " << matrix_size << " : Number of rows and cols \n";
     
     int counter = 1;
     std::string linetxt;
@@ -221,7 +221,7 @@ std::vector<std::vector<int>> QuadTree::readFile(std::string& filename) {
         image.push_back(row);
         // std::cout << "Reading Line\n";    
     }
-    std::cout << "Completed reading line\n";
+    // std::cout << "Completed reading line\n";
     return image;
 
 }
