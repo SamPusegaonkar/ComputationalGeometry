@@ -14,7 +14,10 @@ Node* QuadTree::buildTree(std::vector<std::vector<int>>& image) {
 void QuadTree::buildTreeHelper(Node* node, int row, int col, int matrix_size, int depth) {
     node->depth = depth;
 
-    if ( matrix_size == 1) {  
+    if ( matrix_size <= 0 )
+        return;
+
+    else if ( matrix_size == 1) {  
         if( depthColors.find(depth) == depthColors.end()) {
             std::unordered_set<int>colors;
             depthColors[depth] = colors;
