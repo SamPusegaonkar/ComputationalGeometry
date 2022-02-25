@@ -1,42 +1,29 @@
-
-
 #include <iostream>
 #include <cmath>
 
 #include "../include/QuadTree.h"
-// #include "../include/matplotlibcpp.h"
-// namespace plt = matplotlibcpp;
 
-// gcc main.cpp runGetIntersection.cpp runGet.cpp QuadTree.cpp Node.cpp -lstdc++ -o main.o
+// gcc runGetIntersection.cpp QuadTree.cpp Node.cpp -lstdc++ -o runGetIntersection.o
+
 
 int main( ) {
 
     //Read the input file 
-    // std::cout << "START INPUT\n";
-    // std::string file;
-    // std::cout << "Type the filename & press enter! (Example: test_case.txt) ";
-    // std::cin >> file;
+    std::cout << "START INPUT\n";
+    std::string file;
+    std::cout << "Type name of the first file & press enter! (Example: test_case_1.txt) ";
+    std::cin >> file;
     std::string directory = "../input/";
-    // std::string filename = directory + file;
+    std::string filename1 = directory + file;
 
-    // QuadTree qt;
-    // auto image = qt.readFile(filename);
-
-    // //Building Tree
-    // auto rootNode = qt.buildTree(image);
-    // std::cout << "SPLIT COMPLETED\n";
-    // std::cout << "START RQ\n";
-
-    // //Preorder Tree
-    // qt.getPreorderTraversal(rootNode);
-    // std::cout << "END RQ\n";
-
+    std::cout << "Type name of the second file & press enter! (Example: test_case_2.txt) ";
+    std::cin >> file;
+    std::string filename2 = directory + file;
 
     //INTERSECTION TEST
     Node* intersection_root_node = new Node();
     QuadTree qt1, qt2;
-    std::string filename1 = directory + "2.txt";
-    std::string filename2 = directory + "3.txt";
+
     auto image1 = qt1.readFile(filename1);
     auto image2 = qt2.readFile(filename2);
     auto tree1 = qt1.buildTree(image1);
