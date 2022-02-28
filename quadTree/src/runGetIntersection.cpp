@@ -26,8 +26,12 @@ int main( ) {
 
     auto image1 = qt1.readFile(filename1);
     auto image2 = qt2.readFile(filename2);
+    std::cout << "---------------------------------------------\n";
     auto tree1 = qt1.buildTree(image1);
+    std::cout << "SPLIT COMPLETED\n";
+    std::cout << "---------------------------------------------\n";
     auto tree2 = qt2.buildTree(image2);
+    std::cout << "SPLIT COMPLETED\n";
     std::cout << "---------------------------------------------\n";
     std::cout << "START INTERSECTION\n";
 
