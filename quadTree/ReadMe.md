@@ -2,13 +2,13 @@
 
   <h2> Introduction </h2>
 
-  Given a 2D image in a file format, generate a quad tree!
+  Given a 2D image in a file format, generate a quad tree & also find intersection of 2 quad trees!
 
   <h2> Required Material </h2>
 
     0. gcc </br>
     1. A txt file with the points of a image. (Example shown below)
-    2. Your txt file should be inside the 'input' folder!
+    2. Your txt file should be inside the './input' folder!
 
   <h2>Run instructions </h2>
 
