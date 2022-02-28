@@ -4,28 +4,3 @@
 0 0 0 1 
 0 0 0 0  
 
-//og = 1
-4(nw,)->2(nw,  )->1(return)
-
-
-#when is the split block counter updated?
-//inorder -> 
-
-node (0)
-4 children of node-> nw, ne ,sw, se size 2. [4*i+1] = [1]
-nw(1)
-
-//0 is the split which converts 4x4 to 2x2
-0 GRAY
-1 GRAY
-5 BLACK
-6 WHITE
-7 WHITE
-8 WHITE
-2 BLACK
-3 WHITE
-4 GRAY
-17 WHITE
-18 BLACK
-19 WHITE
-20 WHITE
