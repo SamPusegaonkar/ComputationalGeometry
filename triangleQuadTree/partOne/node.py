@@ -75,6 +75,10 @@ class Node(object):
     def get_triangle_ids(self):
         return self.__triangle_ids
 
+    def get_triangle_num(self):
+        return len(self.__triangle_ids)
+    
+
     def insert_triangle_id(self, index):
         self.__triangle_ids.append(index)
     ################################################################

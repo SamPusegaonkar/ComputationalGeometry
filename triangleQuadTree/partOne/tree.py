@@ -30,14 +30,14 @@ class Tree(object):
         #My Code
         print(tin.get_triangles_num(), "Num of triangles")
         for triangle_index in range(tin.get_triangles_num()):
-            # print(triangle_index)
             triangle = tin.get_triangle(triangle_index)
             # print(type(triangle))
+            print("INSERT TRIANGLE", triangle_index, "-", triangle.vertex_indices)
+
             for vertex_index in triangle.vertex_indices:
                 vertex = tin.get_vertex(vertex_index)
                 # print(type(vertex), vertex.get_x(), vertex.get_y())
                 node = self.point_query(self.__root, 0, tin.get_domain(), vertex, tin)
-
                 if triangle_index not in node.get_triangle_ids():
                     node.insert_triangle_id(triangle_index)
 
@@ -129,3 +129,28 @@ class Tree(object):
             else:
                 vals.append(ver.get_field(fid))
         return vals
+
+    ################################################################
+    #My Code
+    def get_preorder_traversal(self, root):
+        print("START TRIANGLE PR")
+        self.get_preorder_traversal_helper(root, 0)
+        print("END TRIANGLE PR")
+
+    def get_preorder_traversal_helper(self, node, node_label):
+        if ( node.is_leaf() and node.get_vertices_num() == 0):
+            print(node_label, "EMPTY LEAF")
+            return
+
+        elif ( node.is_leaf() and node.get_vertices_num() != 0):
+            print(node_label, "FULL LEAF")
+            print("V", node.get_vertices_num(), node.get_vertices())
+            print("T", node.get_triangle_num(), node.get_triangle_ids())
+            return
+        
+        print(node_label, "INTERNAL")
+        
+        for counter in range(4):
+            child = node.get_child(counter)
+            self.get_preorder_traversal_helper(child, 4*node_label + (counter+1))
+    ################################################################
