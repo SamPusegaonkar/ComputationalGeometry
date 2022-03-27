@@ -18,7 +18,7 @@
     2. Type: cd triangleQuadTree/src </br>
 
     3. To Build and Print the Tree:
-    3. Type: python3 provided_code_part_1/main_test_demo.py [point_file_path] [capacity]   </br>
+    3. Type: python3 partOne/main_test_demo.py [point_file_path] [capacity]   </br>
 
     4. Enjoy!
 
