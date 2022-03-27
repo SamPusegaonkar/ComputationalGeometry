@@ -67,3 +67,14 @@ class Node(object):
 
     def is_leaf(self): # returns True if the node is leaf node, otherwise returns False
         return self.__children == None
+
+
+    ################################################################
+    #My Code
+
+    def get_triangle_ids(self):
+        return self.__triangle_ids
+
+    def insert_triangle_id(self, index):
+        self.__triangle_ids.append(index)
+    ################################################################

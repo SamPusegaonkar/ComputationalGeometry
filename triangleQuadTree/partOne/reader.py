@@ -18,9 +18,16 @@ class Reader(object):
             trash = infile.readline()
             line = (infile.readline()).split()
             vertices_num = int(line[0])  # store the number of vertices .
+
+            ################################################################
+            #My Code
+            triangles_num = int(line[1]) 
+            ################################################################
+
             # You should write code for getting the number of triangles from the file
             for l in range(vertices_num): # use vertices_num to decide how many lines will be read as vertices
                 line = (infile.readline()).split() # split the line based on space separator
+                # print(line)
                 v=Vertex(float(line[0]),float(line[1]),float(line[2])) # in each line, read input as x,y,z
                 tin.add_vertex(v)
                 if l == 0:
@@ -29,11 +36,18 @@ class Reader(object):
                     tin.get_domain().resize(v)   # domain is determined by input vertices.
                     # You don't need to change domain when reading triangles
             ###### COMPLETE THE CODE for reading and storing the triangles.
-            #
-            #
-            #
-            #
-            #
-            #
+
+            ################################################################
+            #My Code
+            for _ in range(triangles_num):
+                line = (infile.readline()).split()
+                triangle = Triangle(int(line[1]), int(line[2]), int(line[3]))
+                # print(int(line[1]), int(line[2]), int(line[3]))
+                tin.add_triangle(triangle)
+                # print(triangle.vertex_indices)
+                # print(type(triangle.vertex_indices))
+            # tin.print_triangles()
+            ################################################################
+
             infile.close() # close the file after input.
             return tin

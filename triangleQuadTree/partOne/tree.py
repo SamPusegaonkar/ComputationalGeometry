@@ -25,9 +25,23 @@ class Tree(object):
             print ("INSERT POINT %s"%tin.get_vertex(i))  ## you can use this line to check the vertex input. Can comment it out if you don't need it.
             self.insert_vertex(self.__root,0,tin.get_domain(),i,tin)
         # ADD THE CODE for inserting its triangles
-        #
-        #
-        #
+        
+        ################################################################
+        #My Code
+        print(tin.get_triangles_num(), "Num of triangles")
+        for triangle_index in range(tin.get_triangles_num()):
+            # print(triangle_index)
+            triangle = tin.get_triangle(triangle_index)
+            # print(type(triangle))
+            for vertex_index in triangle.vertex_indices:
+                vertex = tin.get_vertex(vertex_index)
+                # print(type(vertex), vertex.get_x(), vertex.get_y())
+                node = self.point_query(self.__root, 0, tin.get_domain(), vertex, tin)
+
+                if triangle_index not in node.get_triangle_ids():
+                    node.insert_triangle_id(triangle_index)
+
+        ################################################################
         #  End of the build_tree() function
 
     def insert_vertex(self,node,node_label,node_domain,v_index,tin):
