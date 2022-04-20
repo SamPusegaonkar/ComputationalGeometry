@@ -166,6 +166,8 @@ if __name__ == '__main__':
     tree.build_tree(tin)   # build_tree() will generate a Triangle PR-quadtree on the input TIN.
     # You need to COMPLETE the build_tree() function in the tree.py
 
+    
+
     ################################################################
     #My Code
     tree.get_preorder_traversal(tree.get_root())
