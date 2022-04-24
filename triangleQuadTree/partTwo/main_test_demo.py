@@ -14,7 +14,7 @@ from reader import Reader
 from tin import TIN
 from tree import Tree
 from point import Point
-
+from grid import Grid
 # generate TIN
 from scipy.spatial import Delaunay 
 
@@ -165,30 +165,30 @@ if __name__ == '__main__':
     tree = Tree(int(capacity)) #initialize a Tree object.
     tree.build_tree(tin)   # build_tree() will generate a Triangle PR-quadtree on the input TIN.
     # You need to COMPLETE the build_tree() function in the tree.py
-
-    
-
     ################################################################
     #My Code
-    tree.get_preorder_traversal(tree.get_root())
+
+    input = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
+    if input == "1":
+        tree.get_preorder_traversal(tree.get_root(), int(1))
+    if input == "2":
+        g = Grid(67, 200,20,20,2,2)
+        g.getElevations()
+        g.printAllElevations()
+        print("Please check the output file: grid.txt!")
+
+    if input == "3":
+        tree.get_preorder_traversal(tree.get_root(), int(3))
     ################################################################
 
 ################################################################
 '''
 
 #clean up code
-    #print question 1 seperately
-    #print question 2 seperately
+    #print question 1 seperately (tree)
+    #print question 2 seperately (grid and a tin)
     #print vt realtion
     
 #visaulize the part2
-#send questions to yuting
-    #Should part1 and part2 be seperate folders
-    #Do all the tasks in part2 need to be in a seperate file. is it okay to print all the output at once?
-    
-
-
-
-
 
 '''

@@ -174,38 +174,46 @@ class Tree(object):
 
     ################################################################
     #My Code
-    def get_preorder_traversal(self, root):
+    def get_preorder_traversal(self, root, printLog):
         print("START TRIANGLE PR")
-        self.get_preorder_traversal_helper(root, 0)
+        self.get_preorder_traversal_helper(root, 0, printLog)
         print("END TRIANGLE PR")
 
-    def get_preorder_traversal_helper(self, node, node_label):
+    def get_preorder_traversal_helper(self, node, node_label, printLog):
         if ( node.is_leaf() and node.get_vertices_num() == 0):
             print(node_label, "EMPTY LEAF")
-            # print(node.get_domain())
-            # print("T", node.get_triangle_num(), node.get_triangle_ids())
-            print("VT: Relation", node.get_incident_triangle_ids())
+            
+            if printLog == 1:
+                print(node.get_domain())
+                print("T", node.get_triangle_num(), node.get_triangle_ids())
+            if  printLog == 3:
+                print("VT: Relation", node.get_incident_triangle_ids())
             print("-----------------------------")  
             return
 
         elif ( node.is_leaf() and node.get_vertices_num() != 0):
             print(node_label, "FULL LEAF")
-            # print("V", node.get_vertices_num(), node.get_vertices())
-            # print("T", node.get_triangle_num(), node.get_triangle_ids())
-            # print(node.get_domain())
-            print("VT: Relation", node.get_incident_triangle_ids())
+            if ( printLog == 1):
+                print(node.get_domain())
+                print("V", node.get_vertices_num(), node.get_vertices())
+                print("T", node.get_triangle_num(), node.get_triangle_ids())
+                
+            if printLog == 3:
+                print("VT: Relation", node.get_incident_triangle_ids())
             print("-----------------------------")
             return
         
         print(node_label,"INTERNAL")
-        # print(node.get_domain())
-        # print("T", node.get_triangle_num(), node.get_triangle_ids())
-        print("VT: Relation", node.get_incident_triangle_ids())
+        if ( printLog == 1):
+            print(node.get_domain())
+            print("T", node.get_triangle_num(), node.get_triangle_ids())
+        if printLog == 3:
+            print("VT: Relation", node.get_incident_triangle_ids())
         print("-----------------------------")
         
         for counter in range(4):
             child = node.get_child(counter)
-            self.get_preorder_traversal_helper(child, 4*node_label + (counter+1))
+            self.get_preorder_traversal_helper(child, 4*node_label + (counter+1), printLog)
 
     def is_intersecting(self, triangle, node_square, tin):
         

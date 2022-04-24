@@ -224,13 +224,18 @@ class Grid:
             z4 = z1 - ((x4-x1)*N[0] + (y4-y1)*N[1])/ N[2]
             return z4
 
+    def printAllElevations(self):
+        
+        with open("grid.txt", "w") as file1:
+            file1.write("The output is in a grid format!\n")
+            file1.write("Format: (x,y,z) where x,y,z are the coordinates of the grid\n\n")
+            for i in range(len(self.grid)):
+                for j in range(len(self.grid[0])):
+                    curr_output = "(" + str(self.grid[i][j].x) + " " +  str(self.grid[i][j].y) + " " + str(self.grid[i][j].z) + "), "
+                    file1.write(curr_output)    
+                file1.write("\n")
 #starting point x, y, grid cell size (height and width), number of rows, and number of cols.
 # g = Grid(45,45,20,20,2,2)
 g = Grid(67, 200,20,20,2,2)
-
 g.getElevations()
-
-for i in range(len(g.grid)):
-    for j in range(len(g.grid[0])):
-        print(g.grid[i][j].x, g.grid[i][j].y, g.grid[i][j].z, end = ",")
-    print("\n")
+g.printAllElevations()

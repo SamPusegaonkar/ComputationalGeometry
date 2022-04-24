@@ -12,7 +12,7 @@ class Node(object):
     '''Creates Class node'''
     def __init__(self):
         self.__vertex_ids = list() #indices of points
-        self.__triangle_ids = list() #indices of triangles
+        self.__triangle_ids = list() #indices of intersecting triangles
         self.__children = None # a list of Node type objects. Equals to None when it is a leaf node.
 
 
