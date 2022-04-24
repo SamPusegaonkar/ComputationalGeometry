@@ -1,6 +1,7 @@
 
 import numpy as np
 import math
+import matplotlib.pyplot as plt
 
 from reader import Reader
 from grid_vertex import GridVertex
@@ -67,9 +68,9 @@ class Grid:
         val1 = self.getOrientation([vertex_1.get_x(), vertex_1.get_y()], [vertex_2.get_x(), vertex_2.get_y()], [i, j])
         val2 = self.getOrientation([vertex_2.get_x(), vertex_2.get_y()], [vertex_3.get_x(), vertex_3.get_y()], [i, j])
         val3 = self.getOrientation([vertex_3.get_x(), vertex_3.get_y()], [vertex_1.get_x(), vertex_1.get_y()], [i, j])
-        print([vertex_1.get_x(), vertex_1.get_y()], [vertex_2.get_x(), vertex_2.get_y()], [vertex_3.get_x(), vertex_3.get_y()])
+        # print([vertex_1.get_x(), vertex_1.get_y()], [vertex_2.get_x(), vertex_2.get_y()], [vertex_3.get_x(), vertex_3.get_y()])
 
-        print(val1, val2, val3)
+        # print(val1, val2, val3)
 
         has_neg = (val1 < 0) or (val2 < 0) or (val3 < 0)
         has_pos = (val1 > 0) or (val2 > 0) or (val3 > 0)
@@ -260,3 +261,33 @@ class Grid:
                     file1.write(curr_output)
                 file1.write("\n")
                 print('\n')
+
+    def plotMatplotLib(self, tin):
+
+        x = []
+        y = []
+        z = []
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+        for i in range(len(self.grid)):
+            for j in range(len(self.grid[0])):
+                x.append(self.grid[i][j].x)
+                y.append(self.grid[i][j].y)
+                z.append(self.grid[i][j].z)
+        ax.scatter(x, y, z)
+
+        tin_x = []
+        tin_y = []
+        tin_z = []
+        for vertex_index in range(tin.get_vertices_num()):
+            vertex = tin.get_vertex(vertex_index)
+
+            tin_x.append(vertex.get_x())
+            tin_y.append(vertex.get_y())
+            tin_z.append(vertex.get_z())
+
+        ax.scatter(tin_x, tin_y, tin_z)
+        ax.set_xlabel('X Label')
+        ax.set_ylabel('Y Label')
+        ax.set_zlabel('Z Label')
+        plt.show()
