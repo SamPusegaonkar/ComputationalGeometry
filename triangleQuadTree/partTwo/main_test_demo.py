@@ -172,3 +172,23 @@ if __name__ == '__main__':
     #My Code
     tree.get_preorder_traversal(tree.get_root())
     ################################################################
+
+################################################################
+'''
+
+#clean up code
+    #print question 1 seperately
+    #print question 2 seperately
+    #print vt realtion
+    
+#visaulize the part2
+#send questions to yuting
+    #Should part1 and part2 be seperate folders
+    #Do all the tasks in part2 need to be in a seperate file. is it okay to print all the output at once?
+    
+
+
+
+
+
+'''
