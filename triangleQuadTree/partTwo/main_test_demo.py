@@ -175,15 +175,21 @@ if __name__ == '__main__':
     ################################################################
     # My Code
 
-    input = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
+    option = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
 
-    if input == "1":
+    if option == "1":
         tree.get_preorder_traversal(tree.get_root(), int(1))
 
-    elif input == "2":
-        input = int(input(""))
-        g = Grid(67, 200, 20, 20, 2, 2)
-        g.getElevations()
+    elif option == "2":
+        start_x = float(input("Enter Starting Point of Grid - X Coordinate: "))
+        start_y = float(input("Enter Starting Point of Grid - Y Coordinate: "))
+        cell_height = int(input("Enter Cell Height Point of Grid: "))
+        cell_width = int(input("Enter Cell Width Point of Grid: "))
+        n_rows = int(input("Enter number of rows: "))
+        n_cols = int(input("Enter number of cols: "))
+        # g = Grid(67, 200, 20, 20, 2, 2)
+        g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
+        g.getElevations(tin_file)
         print("Printing elevations here! Output is also availabel in grid.txt")
         g.printAllElevations()
 
@@ -193,14 +199,7 @@ if __name__ == '__main__':
 
 ################################################################
 '''
-
-#clean up code
-    #remove debug statements
-    #add input in grid
-    #add inptu to tin grid
-
 #visaulize the part2
-
 
 
 '''

@@ -38,7 +38,7 @@ class Tree(object):
         while len(stack) != 0:
             node = stack.pop()
             node_domain = node.get_domain()
-            print(node, node_domain, "test")
+            # print(node, node_domain, "test")
             min_x = node_domain.get_min_point().get_x()
             min_y = node_domain.get_min_point().get_y()
             max_x = node_domain.get_max_point().get_x()
@@ -121,7 +121,7 @@ class Tree(object):
                     if tin.get_vertex(i) == search_point: # here tin.get_vertex(i) and search_point are Vertex objects
                         isfound = True
                         x = i  # x is the point index that is equal to the search point.
-                        print("Vertex "+str(x)+" is in Node "+str(node_label))
+                        # print("Vertex "+str(x)+" is in Node "+str(node_label))
                         break
                 if isfound:
                     return node
@@ -158,12 +158,13 @@ class Tree(object):
             ys.append(tin.get_vertex(v).get_y())
         return xs, ys
 
-    def get_pts_feature_values(self,tin, fid):
-        vals=list()
+    def get_pts_feature_values(self, tin, fid):
+        vals = list()
         for v in range(tin.get_vertices_num()):
             ver = tin.get_vertex(v)
-            #print(ver, fid,ver.get_fields_num() )
-            #ver.print_fields()
+            # print(ver, fid,ver.get_fields_num() )
+            # ver.print_fields()
+            
             if fid >= ver.get_fields_num():
                 sys.exit()
             else:
@@ -182,9 +183,11 @@ class Tree(object):
             print(node_label, "EMPTY LEAF")
 
             if printLog == 1:
-                print(node.get_domain())
+                # print(node.get_domain())
+                print("V", node.get_vertices_num(), node.get_vertices())
                 print("T", node.get_triangle_num(), node.get_triangle_ids())
             elif printLog == 3:
+                print("V", node.get_vertices_num(), node.get_vertices())
                 print("VT: Relation", node.get_incident_triangle_ids())
             print("-----------------------------")
             return
@@ -192,21 +195,24 @@ class Tree(object):
         elif node.is_leaf() and node.get_vertices_num() != 0:
             print(node_label, "FULL LEAF")
             if printLog == 1:
-                print(node.get_domain())
+                # print(node.get_domain())
                 print("V", node.get_vertices_num(), node.get_vertices())
                 print("T", node.get_triangle_num(), node.get_triangle_ids())
 
             elif printLog == 3:
-                print("VT: Relation", node.get_incident_triangle_ids())
+                print("V", node.get_vertices_num(), node.get_vertices())
+                print("VT: Relation", node.get_num_incident_triangle_ids(), node.get_incident_triangle_ids())
             print("-----------------------------")
             return
 
         print(node_label, "INTERNAL")
         if printLog == 1:
-            print(node.get_domain())
+            # print(node.get_domain())
+            print("V", node.get_vertices_num(), node.get_vertices())
             print("T", node.get_triangle_num(), node.get_triangle_ids())
         elif printLog == 3:
-            print("VT: Relation", node.get_incident_triangle_ids())
+            print("V", node.get_vertices_num(), node.get_vertices())
+            print("VT: Relation", node.get_num_incident_triangle_ids(), node.get_incident_triangle_ids())
         print("-----------------------------")
 
         for counter in range(4):
@@ -214,7 +220,7 @@ class Tree(object):
             self.get_preorder_traversal_helper(child, 4*node_label + (counter+1), printLog)
 
     def is_intersecting(self, triangle, node_square, tin):
-        
+
         vertex_indices = triangle.get_vertex_indices()
         vertex_1 = tin.get_vertex(vertex_indices[0])
         vertex_2 = tin.get_vertex(vertex_indices[1])
@@ -223,7 +229,7 @@ class Tree(object):
                               [vertex_2.get_x(), vertex_2.get_y()],
                               [vertex_3.get_x(), vertex_3.get_y()]]
 
-        print("Checking: Node Square", node_square, triangle_perimeter)
+        # print("Checking: Node Square", node_square, triangle_perimeter)
         for i in range(len(node_square)):
             square_point1 = node_square[i]
             square_point2 = node_square[(i+1) % len(node_square)]
@@ -231,14 +237,14 @@ class Tree(object):
                 triangle_point1 = triangle_perimeter[j]
                 triangle_point2 = triangle_perimeter[(j+1) %
                                                      len(triangle_perimeter)]
-                print(square_point1, square_point2,
-                      triangle_point1, triangle_point2)
+                # print(square_point1, square_point2,
+                #       triangle_point1, triangle_point2)
                 if self.isIntersectingHelper(square_point1, square_point2,
                                              triangle_point1, triangle_point2):
-                    print("Found intersecting!")
+                    # print("Found intersecting!")
                     return True
         return False
-    
+
     def isIntersectingHelper(self, p1, p2, p3, p4):
 
         val1 = self.getOrientation(p1, p2, p3)
@@ -248,7 +254,7 @@ class Tree(object):
         val4 = self.getOrientation(p3, p4, p2)
 
         if (val1 == 0 and val2 == 0) or (val3 == 0 and val4 == 0):
-            print("Collinear")
+            # print("Collinear")
 
             if (p3.x >= p1.x and p3.x <= p2.x and p3.y >= p1.y and p3.y <= p2.y):
                 return True
@@ -266,7 +272,7 @@ class Tree(object):
         p3p2X = p2[0] - p3[0]
         p3p2Y = p2[1] - p3[1]
 
-        determinent = (p3p1X * p3p2Y) - (p3p1Y *p3p2X)
+        determinent = (p3p1X * p3p2Y) - (p3p1Y * p3p2X)
         if (determinent > 0):
             return 1
         if (determinent < 0):

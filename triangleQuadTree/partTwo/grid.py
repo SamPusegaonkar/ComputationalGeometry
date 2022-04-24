@@ -20,24 +20,36 @@ class Grid:
         self.n_rows = n_rows
         self.grid = [[GridVertex(i*cell_height + self.starting_x, j*cell_width + self.starting_y) for j in range(n_cols+1)] for i in range(n_rows+1, -1, -1)]
 
-    def getElevationAt(self, row, col):
-        pass
+        for i in range(len(self.grid)):
+            for j in range(len(self.grid[0])):
 
-    def getElevations(self):
+                val1 = str(self.grid[i][j].x)
+                val2 = str(self.grid[i][j].y)
+                val3 = self.grid[i][j].z
 
-        # file_name = input("Enter the file name of tin")
-        self.getIntersectingTriangles( 'pts-dt.off')
+                if val3 is not None:
+                    val3 = str(round(self.grid[i][j].z, 2))
+
+                curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
+                print(curr_output, end=" ")
+                # file1.write(curr_output)
+            # file1.write("\n")
+            print('\n')
+
+    def getElevations(self, filname):
+
+        self.getIntersectingTriangles(filname)
 
     def isOnTriangleVertex(self, tin, grid_vertex, index):
-        print("checking if point is on vertex")
+        # print("checking if point is on vertex")
         triangle = tin.get_triangle(index)
         for vertex_index in triangle.get_vertex_indices():
             vertex = tin.get_vertex(vertex_index)
             if self.isEqual(vertex.get_x(), vertex.get_y(), grid_vertex.x, grid_vertex.y):
-                print("Point is on triangle vertex", grid_vertex.x, grid_vertex.y)
+                # print("Point is on triangle vertex", grid_vertex.x, grid_vertex.y)
                 return True, vertex.get_z()
-        print("Point is not on vertex")
-        return False, 0.0
+        # print("Point is not on vertex")
+        return False, "nan"
 
     def isEqual(self, x, y, grid_x, grid_y):
 
@@ -106,7 +118,7 @@ class Grid:
         return False
 
     def setZElevation(self, vertices, grid_vertex):
-        
+
         vertex_1, vertex_2 = vertices
         x1 = vertex_1.get_x()
         y1 = vertex_1.get_y()
@@ -127,7 +139,7 @@ class Grid:
         mag_v = self.getMagnitude(v)
         multiplier = d/mag_v
         grid_vertex.z = p1[2] + multiplier * v[2]
-        return None
+        print(grid_vertex.z)
 
     def getEuclidianDistance(self, p1, p2):
         return math.sqrt((p1[0] - p2[0])**2 + (p1[1]-p2[1])**2)
@@ -148,13 +160,15 @@ class Grid:
     def getIntersectingTriangles(self, file_name):
 
         reader = Reader()
-        tin = reader.read_tin_file("pts-dt.off")
+        tin = reader.read_tin_file(file_name)
 
-        for i in range(len(g.grid)):
-            for j in range(len(g.grid[0])):
-                print("-----------------------------------")
+        for i in range(len(self.grid)):
+            for j in range(len(self.grid[0])):
+                # print("-----------------------------------")
                 grid_vertex = self.grid[i][j]
-                print(grid_vertex.x, grid_vertex.y, "x and y")
+                # print(grid_vertex.x, grid_vertex.y, "x and y")
+
+                # 
                 for triangle_index in range(tin.get_triangles_num()):
                     triangle = tin.get_triangle(triangle_index)
 
@@ -163,32 +177,30 @@ class Grid:
                         grid_vertex.z = z_elevation
                         break
 
-                    if (self.isPointInsideTriangle(grid_vertex.x, grid_vertex.y, triangle, tin)): 
-                        print("Point is inside TIN")       
-                        print(i, j, triangle)              
+                    if (self.isPointInsideTriangle(grid_vertex.x, grid_vertex.y, triangle, tin)):
+                        # print("Point is inside TIN")
+                        # print(i, j, triangle)
                         grid_vertex.triangles_indices.add(triangle_index)
-                        print("==========")
-                    else:
-                        print("point not inside tin")
-                    print("``````````````````````````````````````")
-
-
+                        # print("==========")
+                    # print("``````````````````````````````````````")
                 # If the point is on an edge
+
                 vertices = self.getIntersectingVertices(tin, grid_vertex)
-                if len(vertices): 
-                    print("found", len(vertices))
+                #Point is on the edge!!!!!!!!!!!!!
+                if len(vertices):
+                    # print("found", len(vertices))
                     self.setZElevation(vertices, grid_vertex)
-                    print(grid_vertex.z)
+                    # print(grid_vertex.z)
 
                 else:
                     grid_vertex.z = self.getElevationHelper(grid_vertex, tin)
-    
+
     def getElevationHelper(self, grid_vertex, tin):
-        
+
         print(grid_vertex.triangles_indices)
 
         print(len(grid_vertex.triangles_indices))
-        
+
         for triangle_index in grid_vertex.triangles_indices:
             triangle = tin.get_triangle(triangle_index)
             vertex_indices = triangle.get_vertex_indices()
@@ -219,7 +231,10 @@ class Grid:
             P = p1
             N = np.cross(np.subtract(p2, P), np.subtract(p3, P))
             z4 = z1 - ((x4-x1)*N[0] + (y4-y1)*N[1]) / N[2]
-            return z4
+
+            print(z4)
+            return z4 if z4 is not None else float("nan")
+        return float("nan")
 
     def printAllElevations(self):
 
@@ -232,10 +247,16 @@ class Grid:
 
             for i in range(len(self.grid)):
                 for j in range(len(self.grid[0])):
-                    curr_output = "(" + str(self.grid[i][j].x) + " " + \
-                                  str(self.grid[i][j].y) + " " + str(self.grid[i][j].z) + "), "
 
-                    print(curr_output)
-                    file1.write(curr_output) 
+                    val1 = str(self.grid[i][j].x)
+                    val2 = str(self.grid[i][j].y)
+                    val3 = self.grid[i][j].z
+
+                    if val3 is not None:
+                        val3 = str(round(self.grid[i][j].z, 2))
+
+                    curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
+                    print(curr_output, end=" ")
+                    file1.write(curr_output)
                 file1.write("\n")
                 print('\n')
