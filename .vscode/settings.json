@@ -78,5 +78,7 @@
         "mutex": "cpp",
         "typeindex": "cpp",
         "unordered_set": "cpp"
-    }
+    },
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.enabled": true
 }
