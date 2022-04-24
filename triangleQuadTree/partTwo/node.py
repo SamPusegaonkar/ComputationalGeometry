@@ -14,9 +14,12 @@ class Node(object):
         self.__vertex_ids = list() #indices of points
         self.__triangle_ids = list() #indices of triangles
         self.__children = None # a list of Node type objects. Equals to None when it is a leaf node.
+
+
         
         #My Code
         self.__domain = None
+        self.__incident_triangle_ids = set()
         # When the current node is INTERNAL:
         # children[0]:nw quadrant  children[1]:ne quadrant children[2]:sw quadrant children[3]:se quadrant
 
@@ -89,4 +92,10 @@ class Node(object):
     
     def set_domain(self, domain):
         self.__domain = domain
+    
+    def add_incident_triangle(self, index):
+        self.__incident_triangle_ids.add(index)
+
+    def get_incident_triangle_ids(self):
+        return self.__incident_triangle_ids
     ################################################################

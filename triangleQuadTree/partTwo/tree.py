@@ -55,6 +55,31 @@ class Tree(object):
                     stack.append(child)
                     counter += 1
 
+
+        stack = []
+        stack.append(self.__root)
+        while len(stack) != 0:
+            node = stack.pop()
+            
+            for vertex_index in node.get_vertices():
+                
+                for triangle_index in range(tin.get_triangles_num()):
+                    triangle = tin.get_triangle(triangle_index)
+                    
+                    for curr_vertex_index in triangle.get_vertex_indices():
+
+                        if vertex_index == curr_vertex_index:
+                            
+                            node.add_incident_triangle(triangle_index)
+                            # node.__incident_triangle_ids.add(triangle_index)
+            
+            if not node.is_leaf():
+                for counter in range(3,-1, -1):
+                    child = node.get_child(counter)
+                    stack.append(child)
+                    counter += 1
+
+        
         
 
         ################################################################
@@ -157,22 +182,25 @@ class Tree(object):
     def get_preorder_traversal_helper(self, node, node_label):
         if ( node.is_leaf() and node.get_vertices_num() == 0):
             print(node_label, "EMPTY LEAF")
-            print(node.get_domain())
-            print("T", node.get_triangle_num(), node.get_triangle_ids())
+            # print(node.get_domain())
+            # print("T", node.get_triangle_num(), node.get_triangle_ids())
+            print("VT: Relation", node.get_incident_triangle_ids())
             print("-----------------------------")  
             return
 
         elif ( node.is_leaf() and node.get_vertices_num() != 0):
             print(node_label, "FULL LEAF")
-            print("V", node.get_vertices_num(), node.get_vertices())
-            print("T", node.get_triangle_num(), node.get_triangle_ids())
-            print(node.get_domain())
+            # print("V", node.get_vertices_num(), node.get_vertices())
+            # print("T", node.get_triangle_num(), node.get_triangle_ids())
+            # print(node.get_domain())
+            print("VT: Relation", node.get_incident_triangle_ids())
             print("-----------------------------")
             return
         
         print(node_label,"INTERNAL")
-        print(node.get_domain())
-        print("T", node.get_triangle_num(), node.get_triangle_ids())
+        # print(node.get_domain())
+        # print("T", node.get_triangle_num(), node.get_triangle_ids())
+        print("VT: Relation", node.get_incident_triangle_ids())
         print("-----------------------------")
         
         for counter in range(4):
