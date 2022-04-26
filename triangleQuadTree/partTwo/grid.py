@@ -32,10 +32,10 @@ class Grid:
                     val3 = str(round(self.grid[i][j].z, 2))
 
                 curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
-                print(curr_output, end=" ")
+                # print(curr_output, end=" ")
                 # file1.write(curr_output)
             # file1.write("\n")
-            print('\n')
+            # print('\n')
 
     def getElevations(self, filname):
 
@@ -47,7 +47,6 @@ class Grid:
         for vertex_index in triangle.get_vertex_indices():
             vertex = tin.get_vertex(vertex_index)
             if self.isEqual(vertex.get_x(), vertex.get_y(), grid_vertex.x, grid_vertex.y):
-                # print("Point is on triangle vertex", grid_vertex.x, grid_vertex.y)
                 return True, vertex.get_z()
         # print("Point is not on vertex")
         return False, "nan"
@@ -68,33 +67,10 @@ class Grid:
         val1 = self.getOrientation([vertex_1.get_x(), vertex_1.get_y()], [vertex_2.get_x(), vertex_2.get_y()], [i, j])
         val2 = self.getOrientation([vertex_2.get_x(), vertex_2.get_y()], [vertex_3.get_x(), vertex_3.get_y()], [i, j])
         val3 = self.getOrientation([vertex_3.get_x(), vertex_3.get_y()], [vertex_1.get_x(), vertex_1.get_y()], [i, j])
-        # print([vertex_1.get_x(), vertex_1.get_y()], [vertex_2.get_x(), vertex_2.get_y()], [vertex_3.get_x(), vertex_3.get_y()])
-
-        # print(val1, val2, val3)
 
         has_neg = (val1 < 0) or (val2 < 0) or (val3 < 0)
         has_pos = (val1 > 0) or (val2 > 0) or (val3 > 0)
         return not (has_neg and has_pos)
-
-    def getIntersectingVertices(self, tin, grid_vertex):
-
-        for triangle_index in grid_vertex.triangles_indices:
-            triangle = tin.get_triangle(triangle_index)
-            vertex_indices = triangle.get_vertex_indices()
-
-            vertex_1 = tin.get_vertex(vertex_indices[0])
-            vertex_2 = tin.get_vertex(vertex_indices[1])
-            vertex_3 = tin.get_vertex(vertex_indices[2])
-
-            if (self.isPointOnEdgeHelper(vertex_1, vertex_2, grid_vertex)):
-                return [vertex_1, vertex_2]
-
-            if (self.isPointOnEdgeHelper(vertex_2, vertex_3, grid_vertex)):
-                return [vertex_1, vertex_2]
-
-            if (self.isPointOnEdgeHelper(vertex_3, vertex_1, grid_vertex)):
-                return [vertex_1, vertex_2]
-        return []
 
     def isPointOnEdgeHelper(self, vertex_1, vertex_2, grid_vertex):
 
@@ -112,15 +88,14 @@ class Grid:
 
         # Collinear
         if self.getOrientation(p1, p2, p3) == 0:
-            if p2[0] >= p3[0] >= p1[0] and p2[1] >= p3[1] >= p1[1] :
+            if p2[0] >= p3[0] >= p1[0] and p2[1] >= p3[1] >= p1[1]:
                 return True
             elif p1[0] >= p3[0] >= p2[0] and p1[1] >= p3[1] >= p2[1]:
                 return True
         return False
 
-    def setZElevation(self, vertices, grid_vertex):
+    def setZElevation(self, vertex_1, vertex_2, grid_vertex):
 
-        vertex_1, vertex_2 = vertices
         x1 = vertex_1.get_x()
         y1 = vertex_1.get_y()
         z1 = vertex_1.get_z()
@@ -139,8 +114,7 @@ class Grid:
         v = [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]]
         mag_v = self.getMagnitude(v)
         multiplier = d/mag_v
-        grid_vertex.z = p1[2] + multiplier * v[2]
-        print(grid_vertex.z)
+        return p1[2] + multiplier * v[2]
 
     def getEuclidianDistance(self, p1, p2):
         return math.sqrt((p1[0] - p2[0])**2 + (p1[1]-p2[1])**2)
@@ -167,9 +141,7 @@ class Grid:
             for j in range(len(self.grid[0])):
                 # print("-----------------------------------")
                 grid_vertex = self.grid[i][j]
-                # print(grid_vertex.x, grid_vertex.y, "x and y")
 
-                # 
                 for triangle_index in range(tin.get_triangles_num()):
                     triangle = tin.get_triangle(triangle_index)
 
@@ -177,65 +149,81 @@ class Grid:
                     if onVertex:
                         grid_vertex.z = z_elevation
                         break
+                    elif self.isPointOnEdge(grid_vertex, tin, triangle):
+                        vertex_1, vertex_2 = self.getIntersectingEdge(grid_vertex, tin, triangle)
+                        grid_vertex.z = self.setZElevation(vertex_1, vertex_2, grid_vertex)
+                        break
 
-                    if (self.isPointInsideTriangle(grid_vertex.x, grid_vertex.y, triangle, tin)):
-                        # print("Point is inside TIN")
-                        # print(i, j, triangle)
-                        grid_vertex.triangles_indices.add(triangle_index)
-                        # print("==========")
-                    # print("``````````````````````````````````````")
-                # If the point is on an edge
+                    elif (self.isPointInsideTriangle(grid_vertex.x, grid_vertex.y, triangle, tin)):
+                        grid_vertex.z = self.getElevationHelper(grid_vertex, tin, triangle)
+                        break
+        return
 
-                vertices = self.getIntersectingVertices(tin, grid_vertex)
-                #Point is on the edge!!!!!!!!!!!!!
-                if len(vertices):
-                    # print("found", len(vertices))
-                    self.setZElevation(vertices, grid_vertex)
-                    # print(grid_vertex.z)
+    def isPointOnEdge(self, grid_vertex, tin, triangle):
+        vertex_indices = triangle.get_vertex_indices()
 
-                else:
-                    grid_vertex.z = self.getElevationHelper(grid_vertex, tin)
+        vertex_1 = tin.get_vertex(vertex_indices[0])
+        vertex_2 = tin.get_vertex(vertex_indices[1])
+        vertex_3 = tin.get_vertex(vertex_indices[2])
 
-    def getElevationHelper(self, grid_vertex, tin):
+        return True \
+            if self.isPointOnEdgeHelper(vertex_1, vertex_2, grid_vertex) \
+            or self.isPointOnEdgeHelper(vertex_2, vertex_3, grid_vertex) \
+            or self.isPointOnEdgeHelper(vertex_3, vertex_1, grid_vertex) \
+            else False
 
-        print(grid_vertex.triangles_indices)
+    def getIntersectingEdge(self, grid_vertex, tin, triangle):
+        vertex_indices = triangle.get_vertex_indices()
 
-        print(len(grid_vertex.triangles_indices))
+        vertex_1 = tin.get_vertex(vertex_indices[0])
+        vertex_2 = tin.get_vertex(vertex_indices[1])
+        vertex_3 = tin.get_vertex(vertex_indices[2])
 
-        for triangle_index in grid_vertex.triangles_indices:
-            triangle = tin.get_triangle(triangle_index)
-            vertex_indices = triangle.get_vertex_indices()
+        if (self.isPointOnEdgeHelper(vertex_1, vertex_2, grid_vertex)):
+            return [vertex_1, vertex_2]
 
-            vertex_1 = tin.get_vertex(vertex_indices[0])
-            vertex_2 = tin.get_vertex(vertex_indices[1])
-            vertex_3 = tin.get_vertex(vertex_indices[2])
+        if (self.isPointOnEdgeHelper(vertex_2, vertex_3, grid_vertex)):
+            return [vertex_1, vertex_2]
 
-            x1 = vertex_1.get_x()
-            y1 = vertex_1.get_y()
-            z1 = vertex_1.get_z()
+        if (self.isPointOnEdgeHelper(vertex_3, vertex_1, grid_vertex)):
+            return [vertex_1, vertex_2]
+        return []
 
-            x2 = vertex_2.get_x()
-            y2 = vertex_2.get_y()
-            z2 = vertex_2.get_z()
+    def getElevationHelper(self, grid_vertex, tin, triangle):
 
-            x3 = vertex_3.get_x()
-            y3 = vertex_3.get_y()
-            z3 = vertex_3.get_z()
+        # print(len(grid_vertex.triangles_indices))
 
-            x4 = grid_vertex.x
-            y4 = grid_vertex.y
+        vertex_indices = triangle.get_vertex_indices()
 
-            p1 = [x1, y1, z1]
-            p2 = [x2, y2, z2]
-            p3 = [x3, y3, z3]
+        vertex_1 = tin.get_vertex(vertex_indices[0])
+        vertex_2 = tin.get_vertex(vertex_indices[1])
+        vertex_3 = tin.get_vertex(vertex_indices[2])
 
-            P = p1
-            N = np.cross(np.subtract(p2, P), np.subtract(p3, P))
-            z4 = z1 - ((x4-x1)*N[0] + (y4-y1)*N[1]) / N[2]
+        x1 = vertex_1.get_x()
+        y1 = vertex_1.get_y()
+        z1 = vertex_1.get_z()
 
-            print(z4)
-            return z4 if z4 is not None else float("nan")
-        return float("nan")
+        x2 = vertex_2.get_x()
+        y2 = vertex_2.get_y()
+        z2 = vertex_2.get_z()
+
+        x3 = vertex_3.get_x()
+        y3 = vertex_3.get_y()
+        z3 = vertex_3.get_z()
+
+        x4 = grid_vertex.x
+        y4 = grid_vertex.y
+
+        p1 = [x1, y1, z1]
+        p2 = [x2, y2, z2]
+        p3 = [x3, y3, z3]
+
+        P = p1
+        N = np.cross(np.subtract(p2, P), np.subtract(p3, P))
+        z4 = z1 - ((x4-x1)*N[0] + (y4-y1)*N[1]) / N[2]
+
+        # print(z4)
+        return z4 if z4 is not None else float("nan")
 
     def printAllElevations(self):
 
@@ -281,7 +269,6 @@ class Grid:
         tin_z = []
         for vertex_index in range(tin.get_vertices_num()):
             vertex = tin.get_vertex(vertex_index)
-
             tin_x.append(vertex.get_x())
             tin_y.append(vertex.get_y())
             tin_z.append(vertex.get_z())

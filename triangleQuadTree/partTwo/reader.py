@@ -39,7 +39,7 @@ class Reader(object):
 
             ################################################################
             #My Code
-            print("START INPUT TRIANGLES")
+            # print("START INPUT TRIANGLES")
             for _ in range(triangles_num):
                 line = (infile.readline()).split()
                 triangle = Triangle(int(line[1]), int(line[2]), int(line[3]))
@@ -48,8 +48,8 @@ class Reader(object):
                 # print(triangle.vertex_indices)
                 # print(type(triangle.vertex_indices))
             # tin.print_triangles()
-            print("Total number of triangles: ", tin.get_triangles_num())
-            print("END INPUT TRIANGLES")
+            # print("Total number of triangles: ", tin.get_triangles_num())
+            # print("END INPUT TRIANGLES")
 
             ################################################################
 

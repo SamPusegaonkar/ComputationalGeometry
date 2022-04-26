@@ -75,7 +75,7 @@ def generate_TIN(pts_file):
         nv2 = o2n[v2]
         nv3 = o2n[v3]
         tris = np.append(tris, [[nv1, nv2, nv3]], axis=0)
-   
+
    # output TIN file, Note:  you can rename the file name
     tin_file = "pts-dt.off"
     with open(tin_file, 'w') as ofs:
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         # g = Grid(67, 200, 20, 20, 2, 2)
         g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
         g.getElevations(tin_file)
-        print("Printing elevations here! Output is also availabel in grid.txt")
+        print("Printing elevations here! Output is also available in grid.txt")
         g.printAllElevations()
         g.plotMatplotLib(tin)
 
@@ -202,5 +202,8 @@ if __name__ == '__main__':
 
 ################################################################
 '''
-#visaulize the part2
+#Investigate issue on part2
+#Report
+#HW4
+#50,50,10,10,10,10
 '''
