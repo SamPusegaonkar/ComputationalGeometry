@@ -139,7 +139,6 @@ class Grid:
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
-                # print("-----------------------------------")
                 grid_vertex = self.grid[i][j]
 
                 for triangle_index in range(tin.get_triangles_num()):

@@ -176,7 +176,7 @@ if __name__ == '__main__':
     # My Code
 
     option = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
-
+    print("---------------------------------------------------------------")
     if option == "1":
         tree.get_preorder_traversal(tree.get_root(), int(1))
 
@@ -196,7 +196,7 @@ if __name__ == '__main__':
         g.printAllElevations()
         g.plotMatplotLib(tin)
 
-    elif input == "3":
+    elif option == "3":
         tree.get_preorder_traversal(tree.get_root(), int(3))
     ################################################################
 
