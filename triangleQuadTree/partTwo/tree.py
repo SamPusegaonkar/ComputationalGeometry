@@ -60,18 +60,12 @@ class Tree(object):
         stack.append(self.__root)
         while len(stack) != 0:
             node = stack.pop()
-
             for vertex_index in node.get_vertices():
-
-                for triangle_index in range(tin.get_triangles_num()):
+                for triangle_index in node.get_triangle_ids():
                     triangle = tin.get_triangle(triangle_index)
-
                     for curr_vertex_index in triangle.get_vertex_indices():
-
                         if vertex_index == curr_vertex_index:
-
                             node.add_incident_triangle(triangle_index)
-                            # node.__incident_triangle_ids.add(triangle_index)
 
             if not node.is_leaf():
                 for counter in range(3, -1, -1):
@@ -188,7 +182,7 @@ class Tree(object):
                 print("T", node.get_triangle_num(), node.get_triangle_ids())
             elif printLog == 3:
                 print("V", node.get_vertices_num(), node.get_vertices())
-                print("VT: Relation", node.get_incident_triangle_ids())
+                print("VT: Relation", node.get_num_incident_triangle_ids(), node.get_incident_triangle_ids())
             print("-----------------------------")
             return
 
@@ -256,9 +250,9 @@ class Tree(object):
         if (val1 == 0 and val2 == 0) or (val3 == 0 and val4 == 0):
             # print("Collinear")
 
-            if (p3.x >= p1.x and p3.x <= p2.x and p3.y >= p1.y and p3.y <= p2.y):
+            if (p3[0] >= p1[0] and p3[0] <= p2[0] and p3[1] >= p1[1] and p3[1] <= p2[1]):
                 return True
-            if (p3.x >= p1.x and p4.x <= p2.x and p4.y >= p1.y and p4.y <= p2.y):
+            if (p3[0] >= p1[0] and p4[0] <= p2[0] and p4[1] >= p1[1] and p4[1] <= p2[1]):
                 return True
 
         if (val1 != val2 and val3 != val4):

@@ -202,8 +202,8 @@ if __name__ == '__main__':
 
 ################################################################
 '''
-#Investigate issue on part2
-#Report
+#Test with multiple Data
+# #Report
 #HW4
 #50,50,10,10,10,10
 '''
