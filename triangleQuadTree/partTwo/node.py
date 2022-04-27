@@ -15,14 +15,11 @@ class Node(object):
         self.__triangle_ids = list() #indices of intersecting triangles
         self.__children = None # a list of Node type objects. Equals to None when it is a leaf node.
 
-
-        
         #My Code
         self.__domain = None
         self.__incident_triangle_ids = set()
         # When the current node is INTERNAL:
         # children[0]:nw quadrant  children[1]:ne quadrant children[2]:sw quadrant children[3]:se quadrant
-
 
     def add_vertex(self,id):  # When you add a vertex to a node, you add the index of it.
         # Here the id is the index of the Vertex on the global list
@@ -57,13 +54,11 @@ class Node(object):
         else:
             return None,None # #
 
-
     def is_duplicate(self, v_index, tin):   # vertex with index v_index has the same x,y coordinates as an existing vertex in the node
         for i in self.get_vertices():# check the vertices in this node to see if there is any vertex with same x,y coordinates as the inserting vertex
             if tin.get_vertex(i) == tin.get_vertex(v_index): # == for vertices is based on the x,y coordinates
                 return True
         return False
-
 
     def get_vertices(self): # returns the list of vertex ids. Should implement similar function for triangles.
         return self.__vertex_ids
@@ -74,7 +69,6 @@ class Node(object):
     def is_leaf(self): # returns True if the node is leaf node, otherwise returns False
         return self.__children == None
 
-
     ################################################################
     #My Code
 
@@ -83,22 +77,22 @@ class Node(object):
 
     def get_triangle_num(self):
         return len(self.__triangle_ids)
-    
+
     def insert_triangle_id(self, index):
         self.__triangle_ids.append(index)
 
     def get_domain(self):
         return self.__domain
-    
+
     def set_domain(self, domain):
         self.__domain = domain
-    
+
     def add_incident_triangle(self, index):
         self.__incident_triangle_ids.add(index)
 
     def get_incident_triangle_ids(self):
         return self.__incident_triangle_ids
-    
+
     def get_num_incident_triangle_ids(self):
         return len(self.__incident_triangle_ids)
     ################################################################
