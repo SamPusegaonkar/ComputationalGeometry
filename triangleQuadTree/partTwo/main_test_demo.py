@@ -176,17 +176,20 @@ if __name__ == '__main__':
     # My Code
 
     option = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
-    print("---------------------------------------------------------------")
+    
+    
     if option == "1":
-        tree.get_preorder_traversal(tree.get_root(), int(1))
+        print("---------------------------------------------------------------")
 
+        tree.get_preorder_traversal(tree.get_root(), int(1))
     elif option == "2":
-        print("-----------------------------------------")
+        print("---------------------------------------------------------------")
+
         print("Starting Point is the bottom left corner")
         start_x = float(input("Enter Starting Point of Grid - X Coordinate: "))
         start_y = float(input("Enter Starting Point of Grid - Y Coordinate: "))
-        cell_height = int(input("Enter Cell Height: "))
-        cell_width = int(input("Enter Cell Width: "))
+        cell_height = float(input("Enter Cell Height: "))
+        cell_width = float(input("Enter Cell Width: "))
         n_rows = int(input("Enter number of rows: "))
         n_cols = int(input("Enter number of cols: "))
         # g = Grid(67, 200, 20, 20, 2, 2)
@@ -197,6 +200,8 @@ if __name__ == '__main__':
         g.plotMatplotLib(tin)
 
     elif option == "3":
+        print("---------------------------------------------------------------")
+
         tree.get_preorder_traversal(tree.get_root(), int(3))
     ################################################################
 
@@ -205,5 +210,7 @@ if __name__ == '__main__':
 #Test with multiple Data
 # #Report
 #HW4
-#50,50,10,10,10,10
+#50,50,20,20,20,20
+#50,50,20,20,20,20
+#50,50,20,20,20,20
 '''
