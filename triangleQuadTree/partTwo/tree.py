@@ -222,42 +222,29 @@ class Tree(object):
         triangle_perimeter = [[vertex_1.get_x(), vertex_1.get_y()],
                               [vertex_2.get_x(), vertex_2.get_y()],
                               [vertex_3.get_x(), vertex_3.get_y()]]
-        print("------+=========")
-        print(triangle_perimeter)
+
         triangle_perimeter.sort(key=itemgetter(0))
-        print(triangle_perimeter)
-        print("------+=========")
         min_x, min_y = node_square[0][0], node_square[0][1]
         max_x, min_y = node_square[1][0], node_square[1][1]
         max_x, max_y = node_square[2][0], node_square[2][1]
         min_x, max_y = node_square[3][0], node_square[3][1]
 
-        print(node_square)
-        print(triangle_perimeter)
-
         if (min_x < triangle_perimeter[0][0] and
                 max_x < triangle_perimeter[0][0]):
-            print("1st")
             return False
 
         if (min_x > triangle_perimeter[2][0] and
                 max_x > triangle_perimeter[2][0]):
-            print("2nd")
             return False
 
         triangle_perimeter.sort(key=itemgetter(1))
-        
-        print(node_square)
-        print(triangle_perimeter)
-        print("-")
+
         if (min_y < triangle_perimeter[0][1] and
                 max_y < triangle_perimeter[0][1]):
-            print("3rd")
             return False
         
         if (min_y > triangle_perimeter[2][1] and
                 max_y > triangle_perimeter[2][1]):
-            print("4th")
             return False
 
         # print("Checking: Node Square", node_square, triangle_perimeter)
