@@ -7,6 +7,7 @@ from point import Point
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from operator import itemgetter
 
 
 class Tree(object):
@@ -47,6 +48,7 @@ class Tree(object):
 
             for triangle_index in range(tin.get_triangles_num()):
                 triangle = tin.get_triangle(triangle_index)
+
                 if self.is_intersecting(triangle, node_square, tin):
                     node.insert_triangle_id(triangle_index)
 
@@ -56,6 +58,7 @@ class Tree(object):
                     stack.append(child)
                     counter += 1
 
+    def add_incident_triangles(self, tin):
         stack = []
         stack.append(self.__root)
         while len(stack) != 0:
@@ -72,9 +75,6 @@ class Tree(object):
                     child = node.get_child(counter)
                     stack.append(child)
                     counter += 1
-
-        ################################################################
-        #  End of the build_tree() function
 
     def insert_vertex(self, node, node_label, node_domain, v_index, tin):
         node.set_domain(node_domain)  # My Code
@@ -222,6 +222,43 @@ class Tree(object):
         triangle_perimeter = [[vertex_1.get_x(), vertex_1.get_y()],
                               [vertex_2.get_x(), vertex_2.get_y()],
                               [vertex_3.get_x(), vertex_3.get_y()]]
+        print("------+=========")
+        print(triangle_perimeter)
+        triangle_perimeter.sort(key=itemgetter(0))
+        print(triangle_perimeter)
+        print("------+=========")
+        min_x, min_y = node_square[0][0], node_square[0][1]
+        max_x, min_y = node_square[1][0], node_square[1][1]
+        max_x, max_y = node_square[2][0], node_square[2][1]
+        min_x, max_y = node_square[3][0], node_square[3][1]
+
+        print(node_square)
+        print(triangle_perimeter)
+
+        if (min_x < triangle_perimeter[0][0] and
+                max_x < triangle_perimeter[0][0]):
+            print("1st")
+            return False
+
+        if (min_x > triangle_perimeter[2][0] and
+                max_x > triangle_perimeter[2][0]):
+            print("2nd")
+            return False
+
+        triangle_perimeter.sort(key=itemgetter(1))
+        
+        print(node_square)
+        print(triangle_perimeter)
+        print("-")
+        if (min_y < triangle_perimeter[0][1] and
+                max_y < triangle_perimeter[0][1]):
+            print("3rd")
+            return False
+        
+        if (min_y > triangle_perimeter[2][1] and
+                max_y > triangle_perimeter[2][1]):
+            print("4th")
+            return False
 
         # print("Checking: Node Square", node_square, triangle_perimeter)
         for i in range(len(node_square)):

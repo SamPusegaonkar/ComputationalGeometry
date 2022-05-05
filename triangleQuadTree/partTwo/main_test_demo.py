@@ -170,21 +170,18 @@ if __name__ == '__main__':
     capacity = sys.argv[2]  # sys.argv[2] should be the capacity value
 
     tree = Tree(int(capacity))  # initialize a Tree object.
-    tree.build_tree(tin)   # build_tree() will generate a Triangle PR-quadtree on the input TIN.
     # You need to COMPLETE the build_tree() function in the tree.py
     ################################################################
     # My Code
 
     option = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
-    
-    
     if option == "1":
         print("---------------------------------------------------------------")
-
+        tree.build_tree(tin)
         tree.get_preorder_traversal(tree.get_root(), int(1))
     elif option == "2":
+        tree.build_tree(tin)
         print("---------------------------------------------------------------")
-
         print("Starting Point is the bottom left corner")
         start_x = float(input("Enter Starting Point of Grid - X Coordinate: "))
         start_y = float(input("Enter Starting Point of Grid - Y Coordinate: "))
@@ -201,15 +198,16 @@ if __name__ == '__main__':
 
     elif option == "3":
         print("---------------------------------------------------------------")
-
+        tree.build_tree(tin)
+        tree.add_incident_triangles(tin)
         tree.get_preorder_traversal(tree.get_root(), int(3))
     ################################################################
 
 ################################################################
 '''
-#Test with multiple Data
+#Test with multiple Data -> slow
+#Find grid paramters for multiple triangles
 # #Report
-#HW4
 #50,50,20,20,20,20
 #50,50,20,20,20,20
 #50,50,20,20,20,20
