@@ -188,7 +188,6 @@ if __name__ == '__main__':
         cell_height = float(input("Enter Cell Height: "))
         cell_width = float(input("Enter Cell Width: "))
         n_rows = int(input("Enter number of rows: "))
-        n_cols = int(input("Enter number of cols: "))
         # g = Grid(67, 200, 20, 20, 2, 2)
         g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
         print(tree)

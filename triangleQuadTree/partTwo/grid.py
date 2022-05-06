@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from reader import Reader
 from vertex import Vertex
 
-class Grid:
 
+class Grid:
     def __init__(self, starting_x, starting_y,
                  cell_height, cell_width,
                  n_rows, n_cols):

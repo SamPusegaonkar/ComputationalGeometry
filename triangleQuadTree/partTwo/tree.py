@@ -60,22 +60,15 @@ class Tree(object):
                     counter += 1
 
     def add_incident_triangles(self, tin):
-        stack = []
-        stack.append(self.__root)
-        while len(stack) != 0:
-            node = stack.pop()
-            for vertex_index in node.get_vertices():
-                for triangle_index in node.get_triangle_ids():
-                    triangle = tin.get_triangle(triangle_index)
-                    for curr_vertex_index in triangle.get_vertex_indices():
-                        if vertex_index == curr_vertex_index:
-                            node.add_incident_triangle(triangle_index)
 
-            if not node.is_leaf():
-                for counter in range(3, -1, -1):
-                    child = node.get_child(counter)
-                    stack.append(child)
-                    counter += 1
+        for vertex_index in range(tin.get_vertices_num()):
+            vertex = tin.get_vertex(vertex_index)
+            node = self.point_query(self.get_root(), 0, tin.get_domain(), vertex, tin, True)
+            for triangle_index in node.get_triangle_ids():
+                triangle = tin.get_triangle(triangle_index)
+                for curr_vertex_index in triangle.get_vertex_indices():
+                    if vertex_index == curr_vertex_index:
+                        node.add_incident_triangle(triangle_index)
 
     def insert_vertex(self, node, node_label, node_domain, v_index, tin):
         node.set_domain(node_domain)  # My Code
@@ -122,10 +115,10 @@ class Tree(object):
                             # print("Vertex "+str(x)+" is in Node "+str(node_label))
                             break
                     if isfound:
-                        print("founddd")
+                        # print("founddd")
                         return node
                     else:
-                        print("not found!!!!")
+                        # print("not found!!!!")
                         return None
             else:  # Internal node
                 ### we visit the children in the following order: NW -> NE -> SW -> SE
@@ -148,7 +141,7 @@ class Tree(object):
                             s_label, s_domain = node.compute_child_label_and_domain(3, node_label, node_domain, mid_point)
                             ret_node = self.point_query(node.get_child(3), s_label, s_domain, search_point, tin, check_vertex)
                             return ret_node
-        print("outside!")
+        # print("outside!")
 
     def get_points(self, tin, pts):
         """return xs,ys"""
