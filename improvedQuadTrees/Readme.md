@@ -17,7 +17,7 @@
 
     0. Downlaod this zip file </br> 
     1. Open Terminal </br>
-    2. Type: cd triangleQuadTree/ </br>
+    2. Type: cd improvedQuadTrees/ </br>
     
     3. To run Part 1:
     3. Type: python3 partOne/main_test_demo.py [point_file_path] [capacity]   </br>
