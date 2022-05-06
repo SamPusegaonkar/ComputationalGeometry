@@ -173,13 +173,16 @@ if __name__ == '__main__':
     # You need to COMPLETE the build_tree() function in the tree.py
     ################################################################
     # My Code
-
+    print("---------------------------------------------------------------")
     option = input("Press 1 to see Triangle PR-quadtree, \nPress 2 to see grid, \nPress 3 to see VT realtion\n")
     if option == "1":
         print("---------------------------------------------------------------")
+        print("Please wait...")
         tree.build_tree(tin)
         tree.get_preorder_traversal(tree.get_root(), int(1))
     elif option == "2":
+        print("---------------------------------------------------------------")
+        print("Please wait...")
         tree.build_tree(tin)
         print("---------------------------------------------------------------")
         print("Starting Point is the bottom left corner")
@@ -188,17 +191,17 @@ if __name__ == '__main__':
         cell_height = float(input("Enter Cell Height: "))
         cell_width = float(input("Enter Cell Width: "))
         n_rows = int(input("Enter number of rows: "))
-        n_cols = int(input("Entejr number of cols: "))
-        # g = Grid(67, 200, 20, 20, 2, 2)
+        n_cols = int(input("Enter number of cols: "))
         g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
-        print(tree)
         g.getElevations(tin_file, tree)
+        print("---------------------------------------------------------------")
         print("Printing elevations here! Output is also available in grid.txt")
         g.printAllElevations()
         g.plotMatplotLib(tin)
 
     elif option == "3":
         print("---------------------------------------------------------------")
+        print("Please wait...")
         tree.build_tree(tin)
         tree.add_incident_triangles(tin)
         tree.get_preorder_traversal(tree.get_root(), int(3))

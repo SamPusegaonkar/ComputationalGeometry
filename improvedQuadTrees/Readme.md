@@ -1,4 +1,4 @@
-# Triangle Quad Tree Problem!
+# Triangle & Terrian Quad Tree Problem!
 
   <h2> Introduction </h2>
 
@@ -35,7 +35,7 @@
     Enter Starting Point of Grid - X Coordinate: 
     Enter Starting Point of Grid - Y Coordinate: 
     Enter Cell Height: 
-    Enter Cell Width: 
+    Enter Cell Widt h: 
     Enter number of rows: 
     Enter number of cols: 
 

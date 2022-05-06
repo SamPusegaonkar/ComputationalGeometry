@@ -29,6 +29,8 @@ class Grid:
 
                 if val3 is not None:
                     val3 = str(round(self.grid[i][j].get_z(), 2))
+                else:
+                    val3 = float('nan')
 
                 curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
                 # print(curr_output, end=" ")
