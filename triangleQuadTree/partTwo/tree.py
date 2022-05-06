@@ -28,7 +28,6 @@ class Tree(object):
             # print ("INSERT POINT %s"%tin.get_vertex(i))
             self.insert_vertex(self.__root, 0, tin.get_domain(), i,tin)
         # ADD THE CODE for inserting its triangles
-        #strucutre ->node
 
         ################################################################
         # My Code
