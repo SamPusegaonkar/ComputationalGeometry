@@ -38,18 +38,6 @@ class Tree(object):
         node_domain = tin.get_domain()
         self.__root.set_domain(tin.get_domain())
 
-        #order->pre, inorder, post
-        
-        #square intersects with triangle
-
-        #if parent doesnt intersect ->child wont intersect
-        #child does, parent does
-        #N = nodes tree
-        #T = triangles
-        #O(N*T)
-
-        #O(T*N) -->best, average, worst(rarer)
-        #
         while len(stack) != 0:
             node = stack.pop()
             node_domain = node.get_domain()
