@@ -59,8 +59,7 @@ class Tree(object):
                     child = node.get_child(counter)
                     stack.append(child)
                     counter += 1
-    #O(T) 
-    #traverse->inorder, order
+
     def add_incident_triangles(self, tin):
         stack = []
         stack.append(self.__root)
