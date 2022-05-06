@@ -4,8 +4,7 @@ import math
 import matplotlib.pyplot as plt
 
 from reader import Reader
-from grid_vertex import GridVertex
-
+from vertex import Vertex
 
 class Grid:
 
@@ -19,17 +18,17 @@ class Grid:
         self.cell_height = cell_height
         self.n_cols = n_cols
         self.n_rows = n_rows
-        self.grid = [[GridVertex(i*cell_height + self.starting_x, j*cell_width + self.starting_y) for j in range(n_cols+1)] for i in range(n_rows+1, -1, -1)]
+        self.grid = [[Vertex(i*cell_height + self.starting_x, j*cell_width + self.starting_y) for j in range(n_cols+1)] for i in range(n_rows+1, -1, -1)]
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
 
-                val1 = str(self.grid[i][j].x)
-                val2 = str(self.grid[i][j].y)
-                val3 = self.grid[i][j].z
+                val1 = str(self.grid[i][j].get_x())
+                val2 = str(self.grid[i][j].get_y())
+                val3 = self.grid[i][j].get_z()
 
                 if val3 is not None:
-                    val3 = str(round(self.grid[i][j].z, 2))
+                    val3 = str(round(self.grid[i][j].get_z(), 2))
 
                 curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
                 # print(curr_output, end=" ")
@@ -37,16 +36,16 @@ class Grid:
             # file1.write("\n")
             # print('\n')
 
-    def getElevations(self, filname):
+    def getElevations(self, filname, tree):
 
-        self.getIntersectingTriangles(filname)
+        self.getIntersectingTriangles(filname, tree)
 
     def isOnTriangleVertex(self, tin, grid_vertex, index):
         # print("checking if point is on vertex")
         triangle = tin.get_triangle(index)
         for vertex_index in triangle.get_vertex_indices():
             vertex = tin.get_vertex(vertex_index)
-            if self.isEqual(vertex.get_x(), vertex.get_y(), grid_vertex.x, grid_vertex.y):
+            if self.isEqual(vertex.get_x(), vertex.get_y(), grid_vertex.get_x(), grid_vertex.get_y()):
                 return True, vertex.get_z()
         # print("Point is not on vertex")
         return False, "nan"
@@ -82,8 +81,8 @@ class Grid:
         y2 = vertex_2.get_y()
         p2 = [x2, y2]
 
-        x4 = grid_vertex.x
-        y4 = grid_vertex.y
+        x4 = grid_vertex.get_x()
+        y4 = grid_vertex.get_y()
         p3 = [x4, y4]
 
         # Collinear
@@ -106,8 +105,8 @@ class Grid:
         z2 = vertex_2.get_z()
         p2 = [x2, y2, z2]
 
-        x4 = grid_vertex.x
-        y4 = grid_vertex.y
+        x4 = grid_vertex.get_x()
+        y4 = grid_vertex.get_y()
         p3 = [x4, y4]
 
         d = self.getEuclidianDistance(p1, p3)
@@ -132,29 +131,41 @@ class Grid:
         determinent = (p3p1X * p3p2Y) - (p3p1Y * p3p2X)
         return determinent
 
-    def getIntersectingTriangles(self, file_name):
+    def getIntersectingTriangles(self, file_name, tree):
 
         reader = Reader()
         tin = reader.read_tin_file(file_name)
 
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
+
                 grid_vertex = self.grid[i][j]
-                print(tin.get_triangles_num())
-                for triangle_index in range(tin.get_triangles_num()):
+                print(grid_vertex.get_x(), grid_vertex.get_y(),)
+                node = tree.point_query(tree.get_root(), 0, tin.get_domain(), grid_vertex, tin, False)
+
+                print(node)
+                print(tin.get_domain())
+                print(tree.get_root())
+                print(type(node))
+                if node is None:
+                    print("none-------------------")
+                    continue
+                triangles_indices = node.get_triangle_ids()
+
+                for triangle_index in triangles_indices:
                     triangle = tin.get_triangle(triangle_index)
 
                     onVertex, z_elevation = self.isOnTriangleVertex(tin, grid_vertex, triangle_index)
                     if onVertex:
-                        grid_vertex.z = z_elevation
+                        grid_vertex.set_z(z_elevation)
                         break
                     elif self.isPointOnEdge(grid_vertex, tin, triangle):
                         vertex_1, vertex_2 = self.getIntersectingEdge(grid_vertex, tin, triangle)
-                        grid_vertex.z = self.setZElevation(vertex_1, vertex_2, grid_vertex)
+                        grid_vertex.set_z(self.setZElevation(vertex_1, vertex_2, grid_vertex))
                         break
 
-                    elif (self.isPointInsideTriangle(grid_vertex.x, grid_vertex.y, triangle, tin)):
-                        grid_vertex.z = self.getElevationHelper(grid_vertex, tin, triangle)
+                    elif (self.isPointInsideTriangle(grid_vertex.get_x(), grid_vertex.get_y(), triangle, tin)):
+                        grid_vertex.set_z(self.getElevationHelper(grid_vertex, tin, triangle))
                         break
         return
 
@@ -210,8 +221,8 @@ class Grid:
         y3 = vertex_3.get_y()
         z3 = vertex_3.get_z()
 
-        x4 = grid_vertex.x
-        y4 = grid_vertex.y
+        x4 = grid_vertex.get_x()
+        y4 = grid_vertex.get_y()
 
         p1 = [x1, y1, z1]
         p2 = [x2, y2, z2]
@@ -236,12 +247,12 @@ class Grid:
             for i in range(len(self.grid)):
                 for j in range(len(self.grid[0])):
 
-                    val1 = str(self.grid[i][j].x)
-                    val2 = str(self.grid[i][j].y)
-                    val3 = self.grid[i][j].z
+                    val1 = str(self.grid[i][j].get_x())
+                    val2 = str(self.grid[i][j].get_y())
+                    val3 = self.grid[i][j].get_z()
 
                     if val3 is not None:
-                        val3 = str(round(self.grid[i][j].z, 2))
+                        val3 = str(round(self.grid[i][j].get_z(), 2))
 
                     curr_output = "(" + val1 + " " + val2 + " " + str(val3) + "), "
                     print(curr_output, end=" ")
@@ -258,9 +269,10 @@ class Grid:
         ax = fig.add_subplot(projection='3d')
         for i in range(len(self.grid)):
             for j in range(len(self.grid[0])):
-                x.append(self.grid[i][j].x)
-                y.append(self.grid[i][j].y)
-                z.append(self.grid[i][j].z)
+                if self.grid[i][j].get_z() is not None:
+                    x.append(self.grid[i][j].get_x())
+                    y.append(self.grid[i][j].get_y())
+                    z.append(self.grid[i][j].get_z())
         ax.scatter(x, y, z)
 
         tin_x = []

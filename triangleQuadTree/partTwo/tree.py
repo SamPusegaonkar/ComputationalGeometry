@@ -28,6 +28,7 @@ class Tree(object):
             # print ("INSERT POINT %s"%tin.get_vertex(i))
             self.insert_vertex(self.__root, 0, tin.get_domain(), i,tin)
         # ADD THE CODE for inserting its triangles
+        #strucutre ->node
 
         ################################################################
         # My Code
@@ -36,6 +37,19 @@ class Tree(object):
         stack.append(self.__root)
         node_domain = tin.get_domain()
         self.__root.set_domain(tin.get_domain())
+
+        #order->pre, inorder, post
+        
+        #square intersects with triangle
+
+        #if parent doesnt intersect ->child wont intersect
+        #child does, parent does
+        #N = nodes tree
+        #T = triangles
+        #O(N*T)
+
+        #O(T*N) -->best, average, worst(rarer)
+        #
         while len(stack) != 0:
             node = stack.pop()
             node_domain = node.get_domain()
@@ -57,7 +71,8 @@ class Tree(object):
                     child = node.get_child(counter)
                     stack.append(child)
                     counter += 1
-
+    #O(T) 
+    #traverse->inorder, order
     def add_incident_triangles(self, tin):
         stack = []
         stack.append(self.__root)
@@ -100,7 +115,7 @@ class Tree(object):
                     s_label, s_domain = node.compute_child_label_and_domain(i, node_label, node_domain,mid_point)
                     self.insert_vertex(node.get_child(i), s_label, s_domain, v_index,tin)
 
-    def point_query(self, node, node_label, node_domain, search_point, tin):
+    def point_query(self, node, node_label, node_domain, search_point, tin, check_vertex):
         # node: Node object; node_label: int; node_domain: Domain object;search_point: Vertex object, the vertex you want to search
         # when point_query used in other functions for searching point:
         # node is the root of the tree,node_label is the node label of the root node(0), node_domain is the domain of the TIN(tin.get_domain()).
@@ -109,39 +124,45 @@ class Tree(object):
         # This function will return the node that contains the input search_point.
         if node_domain.contains_point(search_point, tin.get_domain().get_max_point()):
             if node.is_leaf():
-                isfound = False
-                x = None  # x is the point id
-                for i in node.get_vertices():  # for each point index in each node, if that point is equal to the query point, then it is found. Otherwise, it is not found.
-                    if tin.get_vertex(i) == search_point: # here tin.get_vertex(i) and search_point are Vertex objects
-                        isfound = True
-                        x = i  # x is the point index that is equal to the search point.
-                        # print("Vertex "+str(x)+" is in Node "+str(node_label))
-                        break
-                if isfound:
+                if not check_vertex:
                     return node
                 else:
-                    return None
+                    isfound = False
+                    x = None  # x is the point id
+                    for i in node.get_vertices():  # for each point index in each node, if that point is equal to the query point, then it is found. Otherwise, it is not found.
+                        if tin.get_vertex(i) == search_point: # here tin.get_vertex(i) and search_point are Vertex objects
+                            isfound = True
+                            x = i  # x is the point index that is equal to the search point.
+                            # print("Vertex "+str(x)+" is in Node "+str(node_label))
+                            break
+                    if isfound:
+                        print("founddd")
+                        return node
+                    else:
+                        print("not found!!!!")
+                        return None
             else:  # Internal node
                 ### we visit the children in the following order: NW -> NE -> SW -> SE
                 mid_point = node_domain.get_centroid()
                 s_label, s_domain = node.compute_child_label_and_domain(0, node_label, node_domain, mid_point)
-                ret_node = self.point_query(node.get_child(0), s_label, s_domain, search_point, tin)
+                ret_node = self.point_query(node.get_child(0), s_label, s_domain, search_point, tin, check_vertex)
                 if ret_node is not None:
                     return ret_node
                 else:
                     s_label, s_domain = node.compute_child_label_and_domain(1, node_label, node_domain, mid_point)
-                    ret_node = self.point_query(node.get_child(1), s_label, s_domain, search_point, tin)
+                    ret_node = self.point_query(node.get_child(1), s_label, s_domain, search_point, tin, check_vertex)
                     if ret_node is not None:
                         return ret_node
                     else:
                         s_label, s_domain = node.compute_child_label_and_domain(2, node_label, node_domain, mid_point)
-                        ret_node = self.point_query(node.get_child(2), s_label, s_domain, search_point, tin)
+                        ret_node = self.point_query(node.get_child(2), s_label, s_domain, search_point, tin, check_vertex)
                         if ret_node is not None:
                             return ret_node
                         else:
                             s_label, s_domain = node.compute_child_label_and_domain(3, node_label, node_domain, mid_point)
-                            ret_node = self.point_query(node.get_child(3), s_label, s_domain, search_point, tin)
+                            ret_node = self.point_query(node.get_child(3), s_label, s_domain, search_point, tin, check_vertex)
                             return ret_node
+        print("outside!")
 
     def get_points(self, tin, pts):
         """return xs,ys"""

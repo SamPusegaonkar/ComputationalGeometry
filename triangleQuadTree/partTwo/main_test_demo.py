@@ -181,6 +181,7 @@ if __name__ == '__main__':
         tree.get_preorder_traversal(tree.get_root(), int(1))
     elif option == "2":
         tree.build_tree(tin)
+        tree.get_preorder_traversal(tree.get_root(), int(1))
         print("---------------------------------------------------------------")
         print("Starting Point is the bottom left corner")
         start_x = float(input("Enter Starting Point of Grid - X Coordinate: "))
@@ -191,7 +192,8 @@ if __name__ == '__main__':
         n_cols = int(input("Enter number of cols: "))
         # g = Grid(67, 200, 20, 20, 2, 2)
         g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
-        g.getElevations(tin_file)
+        print(tree)
+        g.getElevations(tin_file, tree)
         print("Printing elevations here! Output is also available in grid.txt")
         g.printAllElevations()
         g.plotMatplotLib(tin)
@@ -214,4 +216,6 @@ if __name__ == '__main__':
 #bath - -77500, 546000, 1000, 1000, 10,10
 #chm - 230, 130, 2, 2, 20, 20
 
+#Implementation
+#report->
 '''

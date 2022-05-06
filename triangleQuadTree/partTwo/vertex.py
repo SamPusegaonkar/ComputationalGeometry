@@ -2,9 +2,11 @@ from point import Point
 
 class Vertex(Point):
     """ A Vertex is an extension of Class Point and takes (x,y) attributes plus an elevation."""
-    def __init__(self,x,y,z): # use x,y,z to initialize a vertex
+    def __init__(self,x,y,z=None): # use x,y,z to initialize a vertex
         Point.__init__(self,x,y)
         self.__field_values = [z] # default.. a vertex has one field value when you initialize it... it can be extended!
+
+        
 
     def get_z(self):
         return self.__field_values[0]

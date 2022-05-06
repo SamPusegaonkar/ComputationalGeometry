@@ -95,4 +95,6 @@ class Node(object):
 
     def get_num_incident_triangle_ids(self):
         return len(self.__incident_triangle_ids)
+
+        
     ################################################################
