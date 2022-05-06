@@ -25,8 +25,6 @@ class Domain(object):
         """ it considers as 'closed' only the edges incident in the lower left corner"""
         """ if the node-domain is on the border of tin-domain we consider as closed the corresponding sides having coordinates equal to the max-coordinate value"""
         for i in range(self.__min.get_coordinates_num()):
-            print( self.__min.get_c(i), self.__max.get_c(i), "minmax")
-            print(point.get_c(i))
             if not self.coord_in_range(point.get_c(i),self.__min.get_c(i),self.__max.get_c(i),max_tin_point.get_c(i)):
                 return False
         return True

@@ -140,15 +140,8 @@ class Grid:
             for j in range(len(self.grid[0])):
 
                 grid_vertex = self.grid[i][j]
-                print(grid_vertex.get_x(), grid_vertex.get_y(),)
                 node = tree.point_query(tree.get_root(), 0, tin.get_domain(), grid_vertex, tin, False)
-
-                print(node)
-                print(tin.get_domain())
-                print(tree.get_root())
-                print(type(node))
                 if node is None:
-                    print("none-------------------")
                     continue
                 triangles_indices = node.get_triangle_ids()
 

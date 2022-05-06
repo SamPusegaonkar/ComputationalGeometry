@@ -181,7 +181,6 @@ if __name__ == '__main__':
         tree.get_preorder_traversal(tree.get_root(), int(1))
     elif option == "2":
         tree.build_tree(tin)
-        tree.get_preorder_traversal(tree.get_root(), int(1))
         print("---------------------------------------------------------------")
         print("Starting Point is the bottom left corner")
         start_x = float(input("Enter Starting Point of Grid - X Coordinate: "))

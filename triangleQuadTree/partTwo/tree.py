@@ -223,10 +223,10 @@ class Tree(object):
         print(node_label, "INTERNAL")
         if printLog == 1:
             # print(node.get_domain())
-            print("V", node.get_vertices_num(), node.get_vertices())
+            # print("V", node.get_vertices_num(), node.get_vertices())
             print("T", node.get_triangle_num(), node.get_triangle_ids())
         elif printLog == 3:
-            print("V", node.get_vertices_num(), node.get_vertices())
+            # print("V", node.get_vertices_num(), node.get_vertices())
             print("VT: Relation", node.get_num_incident_triangle_ids(), node.get_incident_triangle_ids())
         print("-----------------------------")
 
