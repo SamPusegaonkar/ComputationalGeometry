@@ -27,7 +27,7 @@
     4. To run Part 2
     4. Type: python3 partTwo/main_test_demo.py [point_file_path] [capacity]   </br>
     4. Example: python3 partTwo/main_test_demo.py ./partOne/dataPartOne/input_vertices_1.pts 1        </br>
-    4. Example: python3 partTwo/main_test_demo.py ./partTwo/dataPartTwo/test_bathymetric.pts 5        </br>
+    4. Example: python3 partTwo/main_test_demo.py ./partTwo/dataPartTwo/test_bathymetric.pts 15        </br>
 
     4. Follow instrutions for running task 1, 2 and 
 
