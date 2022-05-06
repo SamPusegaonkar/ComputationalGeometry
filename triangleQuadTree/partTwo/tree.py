@@ -31,30 +31,34 @@ class Tree(object):
 
         ################################################################
         # My Code
-
+        # Using a data structure to traverse the tree
         stack = []
         stack.append(self.__root)
         node_domain = tin.get_domain()
         self.__root.set_domain(tin.get_domain())
 
-        while len(stack) != 0:
+        while len(stack) != 0:  # Till the stack is not empty
             node = stack.pop()
             node_domain = node.get_domain()
-            # print(node, node_domain, "test")
+
+            # Get the domain of the node
             min_x = node_domain.get_min_point().get_x()
             min_y = node_domain.get_min_point().get_y()
             max_x = node_domain.get_max_point().get_x()
             max_y = node_domain.get_max_point().get_y()
             node_square = [[min_x, min_y], [max_x, min_y], [max_x, max_y], [min_x, max_y]]
 
+            # For each triangle
             for triangle_index in range(tin.get_triangles_num()):
                 triangle = tin.get_triangle(triangle_index)
 
+                # Check intersection
                 if self.is_intersecting(triangle, node_square, tin):
                     node.insert_triangle_id(triangle_index)
 
             if not node.is_leaf():
-                for counter in range(3,-1, -1):
+                # Put children in the stack
+                for counter in range(3, -1, -1):
                     child = node.get_child(counter)
                     stack.append(child)
                     counter += 1

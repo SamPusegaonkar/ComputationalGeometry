@@ -188,6 +188,7 @@ if __name__ == '__main__':
         cell_height = float(input("Enter Cell Height: "))
         cell_width = float(input("Enter Cell Width: "))
         n_rows = int(input("Enter number of rows: "))
+        n_cols = int(input("Entejr number of cols: "))
         # g = Grid(67, 200, 20, 20, 2, 2)
         g = Grid(start_x, start_y, cell_height, cell_width, n_rows, n_cols)
         print(tree)
@@ -205,14 +206,13 @@ if __name__ == '__main__':
 
 ################################################################
 '''
-#Test with multiple Data -> slow
 #Find grid paramters for multiple triangles
 # #Report
 #50,50,20,20,20,20
 #50,50,20,20,20,20
-#50,50,20,20,20,20
-#bath - -77500, 546000, 1000, 1000, 10,10
-#chm - 230, 130, 2, 2, 20, 20
+#230,130,0.2,0.2,40,40
+#bath -77500, 546000, 200, 200, 50,50
+#chm - 230, 130, 2, 2, 40, 40
 
 #Implementation
 #report->
